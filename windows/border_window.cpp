@@ -1,7 +1,7 @@
 #include "border_window.h"
 #include "ncurses.h"
 #include "string.h"
-#include "constants.h"
+#include "../constants.h"
 
 BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
 {

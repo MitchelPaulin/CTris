@@ -1,9 +1,9 @@
 #include <curses.h>
 #include <iostream>
 #include <vector>
-#include "border_window.h"
-#include "game_window.h"
-#include "window.h"
+#include "windows/border_window.h"
+#include "windows/game_window.h"
+#include "windows/window.h"
 #include "string.h"
 #include "constants.h"
 

@@ -5,5 +5,7 @@ CFLAGS = -lncurses
 
 OUTPUT = ctris
 
-all: window.cpp border_window.cpp game_window.cpp main.cpp
-	$(CC) -o $(OUTPUT) main.cpp window.cpp game_window.cpp border_window.cpp $(CFLAGS)
+W_DIR = windows
+
+all: $(W_DIR)/window.cpp $(W_DIR)/border_window.cpp $(W_DIR)/game_window.cpp main.cpp
+	$(CC) -o $(OUTPUT) main.cpp $(W_DIR)/window.cpp $(W_DIR)/game_window.cpp $(W_DIR)/border_window.cpp $(CFLAGS)

@@ -1,5 +1,5 @@
 #include "game_window.h"
-#include "constants.h"
+#include "../constants.h"
 #include "curses.h"
 
 GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
