@@ -1,4 +1,3 @@
-#include <exception>
 #include "window.h"
 
 Window::Window(int width, int height, int startX, int startY)

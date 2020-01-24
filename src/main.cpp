@@ -7,7 +7,7 @@
 #include "windows/game_window.h"
 #include "windows/window.h"
 #include "string.h"
-#include "constants.h"
+#include "../include/constants.h"
 
 void reInit(const std::list<Window> &Windows);
 void initColors();
