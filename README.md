@@ -8,4 +8,4 @@ Install the curses lib
 
 # Compiling 
 
-`g++ -o output main.cpp -lncurses`
+`make all`
