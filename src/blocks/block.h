@@ -3,19 +3,21 @@
 #define BLOCK_H
 
 #include <vector>
-#include <square.h>
-#include "game_window.h"
+#include "square.h"
+#include <curses.h>
 
 class Block
 {
 protected:
+    Block(); //dont allows class to be instantiated 
+    ~Block();
     std::vector<Square> blocks;
 
 public:
-    void moveLeft(const GameWindow);
-    void moveRight(const GameWindow);
-    void moveDown(const GameWindow);
-    virtual void rotate();
+    void moveLeft();
+    void moveRight();
+    void moveDown();
+    virtual void rotate(){}; //override
 };
 
 #endif

@@ -60,6 +60,14 @@ void GameWindow::render()
     refresh();
 }
 
+void eraseBlock(Block block)
+{
+}
+
+void drawBlock(Block block)
+{
+}
+
 /*
     Fill board with colors to test rendering  
 */

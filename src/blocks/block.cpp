@@ -1,42 +1,50 @@
-#include <algorithm>
 #include "block.h"
 
-void Block::moveDown(const GameWindow win)
+Block::Block() {}
+Block::~Block() {}
+
+void Block::moveDown()
 {
 }
 
 /*
     Attempt to move this piece right 
 */
-void Block::moveRight(const GameWindow win)
+void Block::moveRight()
 {
     //can this move right?
     for (Square s : blocks)
     {
-        if (s.getCol() == GameWindow::COLS - 1 || !win.isCellEmpty(s.getRow(), s.getCol() + 1))
+        if (s.getCol())
         {
             return;
         }
     }
 
     //move every piece one to the right
-    std::for_each(blocks.begin(), blocks.end(), Square::bumpRight);
+    for (Square s : blocks)
+    {
+        s.bumpRight();
+    }
 }
 
 /*
     Attempt to move this piece left 
 */
-void Block::moveLeft(const GameWindow win)
+void Block::moveLeft()
 {
     //can this move left?
     for (Square s : blocks)
     {
-        if (s.getCol() == 0 || !win.isCellEmpty(s.getRow(), s.getCol() - 1))
+        if (s.getCol() == 0)
         {
             return;
         }
     }
 
     //move every piece one to the left
-    std::for_each(blocks.begin(), blocks.end(), Square::bumpLeft);
+    for (Square s : blocks)
+    {
+        s.bumpLeft();
+    }
 }

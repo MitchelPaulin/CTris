@@ -1,13 +1,11 @@
 #include <curses.h>
-#include <iostream>
 #include <vector>
 #include <unistd.h>
 #include <list>
 #include "windows/border_window.h"
 #include "windows/game_window.h"
-#include "windows/window.h"
-#include "string.h"
 #include "../include/constants.h"
+#include "../include/all_blocks.h"
 
 void reInit(const std::list<Window> &Windows);
 void initColors();
@@ -26,6 +24,9 @@ int main(void)
 	GameWindow gameWin = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
 	gameWin.test();
 	gameWin.render();
+
+	//Create a Tpiece just to make sure we can 
+	TPiece curPiece = TPiece(); 
 
 	//game loop
 	int s = 0;

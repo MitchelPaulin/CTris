@@ -8,7 +8,7 @@ class BorderWindow : public Window
 {
 public:
     void updateScore(int score);
-    void initWindow(); 
+    void initWindow();
     BorderWindow(int width, int height, int startY, int startX); 
 };
 

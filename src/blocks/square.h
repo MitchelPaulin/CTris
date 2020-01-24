@@ -11,19 +11,14 @@ private:
     int row, col;
 
 public:
-    Square(BLOCK_COLOR color, int row, int col)
-    {
-        this->color = color;
-        this->row = row;
-        this->col = col;
-    }
-    BLOCK_COLOR getColor() { return color; };
-    int getRow() { return row; };
-    int getCol() { return col; };
-    int setRow(int row) { this->row = row; };
-    int setCol(int col) { this->col = col; };
-    void bumpLeft() { col--; };
-    void bumpRight() { col++; };
+    Square(BLOCK_COLOR color, int row, int col);
+    BLOCK_COLOR getColor(); 
+    int getRow();
+    int getCol();
+    int setRow(int row);
+    int setCol(int col);
+    void bumpLeft();
+    void bumpRight();
 };
 
 #endif
