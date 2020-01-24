@@ -54,7 +54,7 @@ void reInit(const std::list<Window> &Windows)
 */
 void initColors()
 {
-	for (int i = COLOR_RED; i <= COLOR_WHITE; i++)
+	for (int i = COLOR_BLACK; i <= COLOR_WHITE; i++)
 	{
 		init_pair(i, i, i);
 	}

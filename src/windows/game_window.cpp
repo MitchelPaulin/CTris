@@ -1,5 +1,4 @@
 #include "game_window.h"
-#include "../../include/constants.h"
 #include "curses.h"
 
 GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
@@ -18,6 +17,15 @@ void GameWindow::initWindow()
     wmove(getWin(), 0, (GAME_WIDTH / 2) - 2);
     waddstr(getWin(), "CTris");
 
+    //init to empty cells
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            board[i][j] = EMPTY_CELL;
+        }
+    }
+
     refresh();
 }
 
@@ -25,20 +33,31 @@ void GameWindow::initWindow()
     Draw the current game state to the board
 */
 void GameWindow::render()
-{ 
-    int curRow = 1; 
+{
+    int curRow = 1;
     for (int i = 21; i >= 0; i--)
     {
-        wmove(getWin(), curRow++, 1); //move cursor to next line 
+        wmove(getWin(), curRow++, 1); //move cursor to next line
         for (int j = 0; j < COLS; j++)
         {
-            wattron(getWin(), COLOR_PAIR(board[i][j]));
-            wprintw(getWin(), "  ");
-            wattroff(getWin(), COLOR_PAIR(board[i][j]));
+            BLOCK_COLOR cell = board[i][j];
+            if (cell == EMPTY_CELL)
+            {
+                wattron(getWin(), COLOR_PAIR(COLOR_BLACK));
+                wprintw(getWin(), ". ");
+                wattroff(getWin(), COLOR_PAIR(COLOR_BLACK));
+            }
+
+            else
+            {
+                wattron(getWin(), COLOR_PAIR(cell));
+                wprintw(getWin(), "  ");
+                wattroff(getWin(), COLOR_PAIR(cell));
+            }
         }
     }
 
-    refresh(); 
+    refresh();
 }
 
 /*
@@ -50,7 +69,7 @@ void GameWindow::test()
     {
         for (int j = 0; j < COLS; j++)
         {
-            board[i][j] = i % COLOR_WHITE + 1;
+            board[i][j] = i % COLOR_WHITE;
         }
     }
 }

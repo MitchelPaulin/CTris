@@ -3,6 +3,7 @@
 #define GAME_WINDOW_H
 
 #include "window.h"
+#include "../../include/constants.h"
 
 class GameWindow : public Window
 {
@@ -14,9 +15,10 @@ public:
     void render();
     void initWindow();
     void test();
+    bool isCellEmpty(int r, int c) const { return board[r][c] == EMPTY_CELL; };
 
 private:
-    short board[ROWS][COLS];
+    BLOCK_COLOR board[ROWS][COLS];
 };
 
 #endif
