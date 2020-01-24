@@ -1,6 +1,7 @@
 #include <curses.h>
 #include <iostream>
 #include <vector>
+#include <unistd.h> 
 #include "windows/border_window.h"
 #include "windows/game_window.h"
 #include "windows/window.h"
@@ -25,19 +26,12 @@ int main(void)
 	wrefresh(gameWin.getWin()); 
 
 	//game loop
-	int ch;
+	int s = 0;
 	for (;;)
 	{
-		if ((ch = getch()) == ERR)
-		{
-			//no input received
-		}
-		else
-		{
-			if (ch == KEY_UP)
-			{
-			}
-		}
+		bannerWin.updateScore(s++); 
+		usleep(5000); 
+
 	}
 	endwin();
 	return 0;

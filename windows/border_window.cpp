@@ -5,17 +5,30 @@
 
 BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
 {
-    initWindow(); 
+    initWindow();
 }
 
-void BorderWindow::updateScore(int scores)
+/*
+    Change the score displayed on the banner, when this is called refresh will also be called 
+*/
+void BorderWindow::updateScore(int score)
 {
-    //TODO implement
+    int scoreX = 2 + GAME_WIDTH + GAME_WIDTH / 2;
+    int scoreY = 8;
+
+    //use sprintf because we need a char*
+    char scoreStr[9];
+    sprintf(scoreStr, "%d", score);
+
+    wmove(this->getWin(), scoreY, scoreX);
+    waddstr(this->getWin(), scoreStr);
+
+    this->refresh();
 }
 
 void BorderWindow::initWindow()
 {
-    int length = 20; 
+    int length = 20;
     char const *bannerString[length] = {
         "  ___  _____      _     ",
         " / __||_   _|_ _ (_) ___",

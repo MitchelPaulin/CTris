@@ -18,6 +18,7 @@ public:
     int getStartX() { return startX; };
     int getStartY() { return startY; };
     WINDOW *getWin() { return win; };
+    void refresh() { wrefresh(win); };
 };
 
 #endif
