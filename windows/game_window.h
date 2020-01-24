@@ -6,12 +6,17 @@
 
 class GameWindow : public Window
 {
-private:
-    
 
 public:
-    GameWindow(int width, int height, int startY, int startX); 
-    void initWindow(); 
+    const static int ROWS = 26; //have some unrendered rows to hold pieces not yet on board
+    const static int COLS = 10;
+    GameWindow(int width, int height, int startY, int startX);
+    void render();
+    void initWindow();
+    void test();
+
+private:
+    short board[ROWS][COLS];
 };
 
 #endif

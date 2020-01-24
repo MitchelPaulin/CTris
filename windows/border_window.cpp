@@ -13,17 +13,17 @@ BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Wind
 */
 void BorderWindow::updateScore(int score)
 {
-    int scoreX = 2 + GAME_WIDTH + GAME_WIDTH / 2;
-    int scoreY = 8;
+    int scoreX = 31; 
+    int scoreY = 7;
 
     //use sprintf because we need a char*
     char scoreStr[9];
     sprintf(scoreStr, "%d", score);
 
-    wmove(this->getWin(), scoreY, scoreX);
-    waddstr(this->getWin(), scoreStr);
+    wmove(getWin(), scoreY, scoreX);
+    waddstr(getWin(), scoreStr);
 
-    this->refresh();
+    refresh();
 }
 
 /*
@@ -39,9 +39,7 @@ void BorderWindow::initWindow()
         " \\___|  |_| |_|  |_|/__/",
         "By: Mitchel Paulin",
         "",
-        "",
         "Score: 0",
-        "",
         "",
         "Controls",
         "",
@@ -50,16 +48,21 @@ void BorderWindow::initWindow()
         "Down:        S",
         "Rotate:      W",
         "Drop:    Space",
+        "Restart:     R",
+        "Exit:        E",
         "",
-        "",
-        "Next:"};
+        "", 
+        "Next:            "};
 
+    //Draw every line and also center it within the frame 
     for (int i = 0; i < length; i++)
     {
         int padding = (WIDTH - strlen(bannerString[i]) - 1) / 2;
-        wmove(this->getWin(), i + 1, padding);
-        waddstr(this->getWin(), bannerString[i]);
+        wmove(getWin(), i + 1, padding);
+        waddstr(getWin(), bannerString[i]);
     }
 
-    wborder(this->getWin(), 0, 0, 0, 0, 0, 0, 0, 0);
+    wborder(getWin(), 0, 0, 0, 0, 0, 0, 0, 0);
+
+    refresh(); 
 }
