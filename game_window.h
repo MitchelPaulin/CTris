@@ -6,6 +6,9 @@
 
 class GameWindow : public Window
 {
+private:
+    
+
 public:
     GameWindow(int width, int height, int startY, int startX); 
     void initWindow(); 
