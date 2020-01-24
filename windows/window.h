@@ -19,6 +19,7 @@ public:
     int getStartY() { return startY; };
     WINDOW *getWin() { return win; };
     void refresh() { wrefresh(win); };
+    virtual void initWindow() {}; //override
 };
 
 #endif

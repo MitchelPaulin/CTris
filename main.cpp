@@ -1,12 +1,15 @@
 #include <curses.h>
 #include <iostream>
 #include <vector>
-#include <unistd.h> 
+#include <unistd.h>
+#include <list> 
 #include "windows/border_window.h"
 #include "windows/game_window.h"
 #include "windows/window.h"
 #include "string.h"
 #include "constants.h"
+
+void reInit(const std::list<Window> & Windows);
 
 int main(void)
 {
@@ -22,8 +25,7 @@ int main(void)
 	GameWindow gameWin = GameWindow(HEIGHT, GAME_WIDTH, 0, 0); 
 
 	wrefresh(stdscr);
-	wrefresh(bannerWin.getWin());
-	wrefresh(gameWin.getWin()); 
+	wrefresh(gameWin.getWin());
 
 	//game loop
 	int s = 0;
@@ -31,8 +33,18 @@ int main(void)
 	{
 		bannerWin.updateScore(s++); 
 		usleep(5000); 
-
 	}
 	endwin();
 	return 0;
+}
+
+/*
+	Call the overriden function of every window to reinitialize it 
+*/
+void reInit(const std::list<Window> & Windows)
+{
+	for(auto w : Windows)
+	{
+		w.initWindow();  
+	}
 }

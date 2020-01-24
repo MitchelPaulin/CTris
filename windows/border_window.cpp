@@ -26,6 +26,9 @@ void BorderWindow::updateScore(int score)
     this->refresh();
 }
 
+/*
+    Draw the initial state of the window
+*/
 void BorderWindow::initWindow()
 {
     int length = 20;
@@ -42,11 +45,11 @@ void BorderWindow::initWindow()
         "",
         "Controls",
         "",
-        "Left:        a",
-        "Right:       d",
-        "Down:        s",
-        "Rotate:      w",
-        "Drop:    space",
+        "Left:        A",
+        "Right:       D",
+        "Down:        S",
+        "Rotate:      W",
+        "Drop:    Space",
         "",
         "",
         "Next:"};

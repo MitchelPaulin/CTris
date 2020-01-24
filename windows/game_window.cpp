@@ -7,13 +7,15 @@ GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(w
     GameWindow::initWindow(); 
 }
 
+/*
+    Override
+    Draw the initial state of the window
+*/ 
 void GameWindow::initWindow()
 {
-    wborder(this->getWin(), 0, 0, 0, 0, 0, 0, 0, 0);
+    wborder(getWin(), 0, 0, 0, 0, 0, 0, 0, 0);
 
     //draw title 
-    wmove(this->getWin(), 0, (GAME_WIDTH / 2) - 3);
-    waddstr(this->getWin(), "Ctris");
-
-    
+    wmove(getWin(), 0, (GAME_WIDTH / 2) - 2);
+    waddstr(getWin(), "CTris");
 }
