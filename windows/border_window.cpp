@@ -15,15 +15,30 @@ void BorderWindow::updateScore(int scores)
 
 void BorderWindow::initWindow()
 {
-
-    char const *bannerString[5] = {
+    int length = 20; 
+    char const *bannerString[length] = {
         "  ___  _____      _     ",
         " / __||_   _|_ _ (_) ___",
         "| (__   | | | '_|| |(_-<",
         " \\___|  |_| |_|  |_|/__/",
-        "By: Mitchel Paulin"};
+        "By: Mitchel Paulin",
+        "",
+        "",
+        "Score: 0",
+        "",
+        "",
+        "Controls",
+        "",
+        "Left:        a",
+        "Right:       d",
+        "Down:        s",
+        "Rotate:      w",
+        "Drop:    space",
+        "",
+        "",
+        "Next:"};
 
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < length; i++)
     {
         int padding = (WIDTH - strlen(bannerString[i]) - 1) / 2;
         wmove(this->getWin(), i + 1, padding);
