@@ -3,8 +3,18 @@
 Block::Block() {}
 Block::~Block() {}
 
+//return an non editable vector of this block
+
+/*
+    Attempt to move this piece down 
+*/
 void Block::moveDown()
 {
+    //move every piece one down 
+    for (Square* s : blocks)
+    {
+        s->bumpDown();
+    }
 }
 
 /*
@@ -12,19 +22,10 @@ void Block::moveDown()
 */
 void Block::moveRight()
 {
-    //can this move right?
-    for (Square s : blocks)
-    {
-        if (s.getCol())
-        {
-            return;
-        }
-    }
-
     //move every piece one to the right
-    for (Square s : blocks)
+    for (Square* s : blocks)
     {
-        s.bumpRight();
+        s->bumpRight();
     }
 }
 
@@ -33,18 +34,14 @@ void Block::moveRight()
 */
 void Block::moveLeft()
 {
-    //can this move left?
-    for (Square s : blocks)
-    {
-        if (s.getCol() == 0)
-        {
-            return;
-        }
-    }
-
     //move every piece one to the left
-    for (Square s : blocks)
+    for (Square* s : blocks)
     {
-        s.bumpLeft();
+        s->bumpLeft();
     }
+}
+
+const std::vector<Square*> Block::getSquares()
+{
+    return blocks;
 }

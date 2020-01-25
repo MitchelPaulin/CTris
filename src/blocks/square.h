@@ -19,6 +19,7 @@ public:
     int setCol(int col);
     void bumpLeft();
     void bumpRight();
+    void bumpDown(); 
 };
 
 #endif

@@ -12,6 +12,7 @@ public:
     static const BLOCK_COLOR color = COLOR_MAGENTA;
     void rotate() override; 
     TPiece();
+    ~TPiece(); 
 };
 
 #endif

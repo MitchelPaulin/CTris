@@ -5,3 +5,4 @@
 #define EMPTY_CELL 0
 #define BOARD_WIDTH 10
 #define BOARD_HEIGHT 26
+#define CLOCK_SPEED 600000

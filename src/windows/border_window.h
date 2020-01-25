@@ -3,6 +3,7 @@
 #define BORDER_WINDOW_H
 
 #include "window.h"
+#include "../blocks/block.h"
 
 class BorderWindow : public Window
 {

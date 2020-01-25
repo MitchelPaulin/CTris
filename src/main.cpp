@@ -22,18 +22,21 @@ int main(void)
 	//Construct windows
 	BorderWindow bannerWin = BorderWindow(HEIGHT, WIDTH, GAME_WIDTH, 0);
 	GameWindow gameWin = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
-	gameWin.test();
 	gameWin.render();
 
-	//Create a Tpiece just to make sure we can 
-	TPiece curPiece = TPiece(); 
+	//Create a Tpiece just to make sure we can
+	Block curPiece = TPiece();
 
 	//game loop
 	int s = 0;
 	for (;;)
 	{
-		bannerWin.updateScore(s++);
-		usleep(5000);
+		//bannerWin.updateScore(s++);
+		gameWin.eraseBlock(curPiece);
+		curPiece.moveDown();
+		gameWin.drawBlock(curPiece);
+		gameWin.render(); 
+		usleep(CLOCK_SPEED);
 	}
 	endwin();
 	return 0;

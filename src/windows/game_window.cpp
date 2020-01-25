@@ -1,5 +1,6 @@
 #include "game_window.h"
 #include "curses.h"
+#include <iostream> 
 
 GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
 {
@@ -47,7 +48,6 @@ void GameWindow::render()
                 wprintw(getWin(), ". ");
                 wattroff(getWin(), COLOR_PAIR(COLOR_BLACK));
             }
-
             else
             {
                 wattron(getWin(), COLOR_PAIR(cell));
@@ -60,12 +60,26 @@ void GameWindow::render()
     refresh();
 }
 
-void eraseBlock(Block block)
+/*
+    Remove this block from the array
+*/
+void GameWindow::eraseBlock(Block block)
 {
+    for (Square* s : block.getSquares())
+    {
+        board[s->getRow()][s->getCol()] = EMPTY_CELL;
+    }
 }
 
-void drawBlock(Block block)
+/*
+    Put the block in the array 
+*/
+void GameWindow::drawBlock(Block block)
 {
+    for (Square* s : block.getSquares())
+    { 
+        board[s->getRow()][s->getCol()] = s->getColor();
+    }
 }
 
 /*

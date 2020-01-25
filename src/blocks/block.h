@@ -9,14 +9,15 @@
 class Block
 {
 protected:
-    Block(); //dont allows class to be instantiated 
-    ~Block();
-    std::vector<Square> blocks;
+    std::vector<Square*> blocks;
 
 public:
+    Block();
+    ~Block();
     void moveLeft();
     void moveRight();
     void moveDown();
+    const std::vector<Square*> getSquares();
     virtual void rotate(){}; //override
 };
 
