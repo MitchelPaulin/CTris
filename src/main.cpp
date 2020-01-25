@@ -36,9 +36,10 @@ int main(void)
 	//Prevent wgetch from being a blocking call
 	nodelay(bannerWin.getWin(), TRUE);
 
-	//Create a Tpiece just to make sure we can
+	//Create the two initial pieces 
 	Block curPiece = createNewBlock(dist6(rng));
-	bannerWin.addNextBlock(createNewBlock(dist6(rng)));
+	Block nextPiece = createNewBlock(dist6(rng)); 
+	bannerWin.addNextBlock(nextPiece);
 
 	int score = 0;
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
@@ -47,7 +48,7 @@ int main(void)
 	//game loop
 	for (;;)
 	{
-		//bannerWin.updateScore(s++);
+		//erase block so we can redraw it in new location 
 		gameWin.eraseBlock(curPiece);
 
 		if (downTimer > BLOCK_FALL_SPEED)
@@ -59,7 +60,12 @@ int main(void)
 			}
 			else
 			{
-				//piece has reached the bottom, spawn new spiece
+				//Piece reached bottom, spawn next piece and setup UI
+				gameWin.drawBlock(curPiece);
+				curPiece = nextPiece;
+				nextPiece = createNewBlock(dist6(rng));
+				bannerWin.addNextBlock(nextPiece); 
+				continue;
 			}
 		}
 		else

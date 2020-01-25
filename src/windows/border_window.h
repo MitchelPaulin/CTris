@@ -12,6 +12,8 @@ public:
     void initWindow();
     void addNextBlock(Block); 
     BorderWindow(int width, int height, int startY, int startX); 
+private:
+    void removeCurrentBlock(); 
 };
 
 #endif

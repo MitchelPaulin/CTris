@@ -1,14 +1,15 @@
+#include <vector>
 #include "border_window.h"
 #include "ncurses.h"
 #include "string.h"
 #include "../../include/constants.h"
 
-int score = 0;
 const int scoreX = 31;
 const int scoreY = 7;
 const int length = 20;
 const int nextX = 31;
-const int nextY = 20; 
+const int nextY = 20;
+std::vector<std::pair<int, int>> curPieceCords;
 const char *bannerString[length] = {
     "  ___  _____      _     ",
     " / __||_   _|_ _ (_) ___",
@@ -41,7 +42,6 @@ BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Wind
 */
 void BorderWindow::updateScore(int s)
 {
-    score = s;
     //use sprintf because we need a char*
     char scoreStr[9];
     sprintf(scoreStr, "%d", s);
@@ -77,6 +77,9 @@ void BorderWindow::initWindow()
 */
 void BorderWindow::addNextBlock(Block block)
 {
+    //first, remove the currently drawn block 
+    removeCurrentBlock();
+
     //find the leftmost block and use it as a drawing anchor
     Square *anchor = block.getSquares()[0];
     for (Square *s : block.getSquares())
@@ -87,15 +90,37 @@ void BorderWindow::addNextBlock(Block block)
         }
     }
 
-    //draw the shape using the anchor as a reference point 
+    //draw the shape using the anchor as a reference point
     for (Square *s : block.getSquares())
     {
-        //multiply by 2 because each box takes up two spaces 
-        wmove(getWin(), nextY - (s->getRow() - anchor->getRow()), (s->getCol() - anchor->getCol()) * 2 + nextX);
+        //save the locatoin of the currently draw piece so we can erase it without having to rerender the whole UI
+        int x = (s->getCol() - anchor->getCol()) * 2 + nextX;
+        int y = nextY - (s->getRow() - anchor->getRow());
+        curPieceCords.push_back(std::pair<int, int>(y, x));
+        //multiply by 2 because each box takes up two spaces
+        wmove(getWin(), y, x);
         wattron(getWin(), COLOR_PAIR(s->getColor()));
         wprintw(getWin(), "  ");
         wattroff(getWin(), COLOR_PAIR(s->getColor()));
     }
 
-    refresh(); 
+    refresh();
+}
+
+/*
+    Remove the current drawn block from the UI
+    Should be called before you draw another next block 
+*/
+void BorderWindow::removeCurrentBlock()
+{
+    wattron(getWin(), COLOR_BLACK);
+    while (!curPieceCords.empty())
+    {
+        auto cords = curPieceCords.back();
+        curPieceCords.pop_back();
+        wmove(getWin(), cords.first, cords.second);
+        wprintw(getWin(), "  ");
+        
+    }
+    wattroff(getWin(), COLOR_BLACK);
 }
