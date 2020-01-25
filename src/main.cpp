@@ -10,9 +10,9 @@
 
 void reInit(const std::list<Window> &Windows);
 void initColors();
-bool canMoveRight(Block block);
-bool canMoveLeft(Block block);
-bool canMoveDown(Block block);
+bool canMoveRight(Block block, GameWindow& win);
+bool canMoveLeft(Block block, GameWindow& win);
+bool canMoveDown(Block block, GameWindow& win);
 Block createNewBlock(int num);
 
 int main(void)
@@ -45,15 +45,54 @@ int main(void)
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
 	char userInput;
 
-	//game loop
+	//Game loop
 	for (;;)
 	{
-		//erase block so we can redraw it in new location 
+		//Erase block so we can redraw it in new location 
 		gameWin.eraseBlock(curPiece);
 
+		//Process user input
+		userInput = wgetch(bannerWin.getWin());
+		if (userInput == 'd' || userInput == 'D')
+		{
+			if (canMoveRight(curPiece, gameWin))
+			{
+				curPiece.moveRight();
+			}
+		}
+		else if (userInput == 'a' || userInput == 'A')
+		{
+			if (canMoveLeft(curPiece, gameWin))
+			{
+				curPiece.moveLeft();
+			}
+		}
+		else if (userInput == 'w' || userInput == 'W')
+		{
+			curPiece.rotate(); //Implement this function 
+		}
+		else if (userInput == 's' || userInput == 'S')
+		{
+			if (canMoveDown(curPiece, gameWin))
+			{
+				curPiece.moveDown();
+				downTimer = 0; //Reset down timer
+			}
+		}
+		else if (userInput == 'r' || userInput == 'R')
+		{
+			/* code */
+		}
+		else if (userInput == 'e' || userInput == 'E')
+		{
+			break; //Exit 
+		}
+
+
+		//Move block down 
 		if (downTimer > BLOCK_FALL_SPEED)
 		{
-			if (canMoveDown(curPiece))
+			if (canMoveDown(curPiece, gameWin))
 			{
 				curPiece.moveDown();
 				downTimer = 0;
@@ -73,48 +112,12 @@ int main(void)
 			downTimer++;
 		}
 
-		//process user input
-		userInput = wgetch(bannerWin.getWin());
-		if (userInput == 'd' || userInput == 'D')
-		{
-			if (canMoveRight(curPiece))
-			{
-				curPiece.moveRight();
-			}
-		}
-		else if (userInput == 'a' || userInput == 'A')
-		{
-			if (canMoveLeft(curPiece))
-			{
-				curPiece.moveLeft();
-			}
-		}
-		else if (userInput == 'w' || userInput == 'W')
-		{
-			/* code */
-		}
-		else if (userInput == 's' || userInput == 'S')
-		{
-			if (canMoveDown(curPiece))
-			{
-				curPiece.moveDown();
-				downTimer = 0; //reset down timer
-			}
-		}
-		else if (userInput == 'r' || userInput == 'R')
-		{
-			/* code */
-		}
-		else if (userInput == 'e' || userInput == 'E')
-		{
-			break;
-		}
-
 		//rerender screen with new block location
 		gameWin.drawBlock(curPiece);
 		gameWin.render();
 		usleep(CLOCK_SPEED);
 	}
+
 	endwin();
 	return 0;
 }
@@ -148,11 +151,11 @@ Block createNewBlock(int num)
 /*
 	Determin if given the current block whether or not we can move right 
 */
-bool canMoveRight(Block block)
+bool canMoveRight(Block block, GameWindow& win)
 {
 	for (Square *s : block.getSquares())
 	{
-		if (s->getCol() == BOARD_WIDTH - 1)
+		if (s->getCol() == BOARD_WIDTH - 1 || !win.isCellEmpty(s->getRow(), s->getCol() + 1))
 		{
 			return false;
 		}
@@ -163,11 +166,11 @@ bool canMoveRight(Block block)
 /*
 	Determine if given the current block whether or not we can move left
 */
-bool canMoveLeft(Block block)
+bool canMoveLeft(Block block, GameWindow& win)
 {
 	for (Square *s : block.getSquares())
 	{
-		if (s->getCol() <= 0)
+		if (s->getCol() <= 0 || !win.isCellEmpty(s->getRow(), s->getCol() - 1))
 		{
 			return false;
 		}
@@ -178,11 +181,11 @@ bool canMoveLeft(Block block)
 /*
 	Determine if given the current block whether or not we can move down
 */
-bool canMoveDown(Block block)
+bool canMoveDown(Block block, GameWindow& win)
 {
 	for (Square *s : block.getSquares())
 	{
-		if (s->getRow() <= 0)
+		if (s->getRow() <= 0 || !win.isCellEmpty(s->getRow() - 1, s->getCol()))
 		{
 			return false;
 		}
