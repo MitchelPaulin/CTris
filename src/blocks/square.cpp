@@ -1,5 +1,4 @@
 #include "square.h"
-#include <iostream>
 
 Square::Square(BLOCK_COLOR color, int row, int col)
 {

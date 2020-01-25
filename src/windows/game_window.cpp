@@ -1,6 +1,5 @@
 #include "game_window.h"
 #include "curses.h"
-#include <iostream> 
 
 GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(width, height, startY, startX)
 {
