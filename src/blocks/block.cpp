@@ -10,8 +10,6 @@ Block::~Block()
     }
 }
 
-//return an non editable vector of this block
-
 /*
     Attempt to move this piece down 
 */
@@ -48,6 +46,9 @@ void Block::moveLeft()
     }
 }
 
+/*
+    Return the squares that make up this piece 
+*/
 const std::vector<Square *> Block::getSquares()
 {
     return blocks;
