@@ -5,6 +5,7 @@
 #define EMPTY_CELL 0
 #define BOARD_WIDTH 10
 #define BOARD_HEIGHT 26
+#define BOARD_TOP 24
 #define CLOCK_SPEED 10000
 #define BLOCK_FALL_SPEED 75
 #define BLOCK_TYPES 7

@@ -93,7 +93,7 @@ int main(void)
 			{
 				curPiece.moveDown();
 			}
-			downTimer = BLOCK_FALL_SPEED; //block reached bottom, force spawn 
+			downTimer = BLOCK_FALL_SPEED; //block reached bottom, force spawn
 		}
 
 		//Move block down
@@ -106,7 +106,23 @@ int main(void)
 			}
 			else
 			{
-				//Piece reached bottom, spawn next piece and setup UI
+				//Piece reached bottom, check if player looses
+				//If any block is still "in play" then continue 
+				bool lost = true;
+				for (Square *s : curPiece.getSquares())
+				{
+					if (s->getRow() < BOARD_TOP - 2)
+					{
+						lost = false;
+					}
+				}
+
+				if (lost)
+				{
+					break; //just exit program on loss for now 
+				}
+
+				//Spawn next piece and setup UI
 				gameWin.drawBlock(curPiece);
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
