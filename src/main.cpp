@@ -23,11 +23,11 @@ int main(void)
 	GameWindow gameWin = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
 	gameWin.render();
 
-	//Prvent wgetch from being a blocking call
+	//Prevent wgetch from being a blocking call
 	nodelay(bannerWin.getWin(), TRUE);
 
 	//Create a Tpiece just to make sure we can
-	Block curPiece = LongPiece();
+	Block curPiece = TPiece();
 	bannerWin.addNextBlock(curPiece); 
 
 	int score = 0;

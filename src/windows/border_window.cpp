@@ -91,7 +91,7 @@ void BorderWindow::addNextBlock(Block block)
     for (Square *s : block.getSquares())
     {
         //multiply by 2 because each box takes up two spaces 
-        wmove(getWin(), s->getRow() - anchor->getRow() + nextY, (s->getCol() - anchor->getCol()) * 2 + nextX);
+        wmove(getWin(), nextY - (s->getRow() - anchor->getRow()), (s->getCol() - anchor->getCol()) * 2 + nextX);
         wattron(getWin(), COLOR_PAIR(s->getColor()));
         wprintw(getWin(), "  ");
         wattroff(getWin(), COLOR_PAIR(s->getColor()));
