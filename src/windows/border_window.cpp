@@ -42,7 +42,7 @@ BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Wind
 */
 void BorderWindow::updateScore(int s)
 {
-    //use sprintf because we need a char*
+    //Use sprintf because waddstr needs a char*
     char scoreStr[9];
     sprintf(scoreStr, "%d", s);
 
@@ -73,14 +73,14 @@ void BorderWindow::initWindow()
 
 /*
     Draws the given block in the "next" spot on the UI
-    Will redraw UI
+    Will refresh UI
 */
 void BorderWindow::addNextBlock(Block block)
 {
-    //first, remove the currently drawn block 
+    //First, remove the currently drawn block 
     removeCurrentBlock();
 
-    //find the leftmost block and use it as a drawing anchor
+    //Find the leftmost block and use it as a drawing anchor
     Square *anchor = block.getSquares()[0];
     for (Square *s : block.getSquares())
     {
@@ -93,11 +93,12 @@ void BorderWindow::addNextBlock(Block block)
     //draw the shape using the anchor as a reference point
     for (Square *s : block.getSquares())
     {
-        //save the locatoin of the currently draw piece so we can erase it without having to rerender the whole UI
-        int x = (s->getCol() - anchor->getCol()) * 2 + nextX;
+        //save the locatoin of the currently draw piece so we can erase it without having to re render the whole UI
+        int x = (s->getCol() - anchor->getCol()) * 2 + nextX; //multiply by 2 because each box takes up two spaces
         int y = nextY - (s->getRow() - anchor->getRow());
         curPieceCords.push_back(std::pair<int, int>(y, x));
-        //multiply by 2 because each box takes up two spaces
+
+        //draw block 
         wmove(getWin(), y, x);
         wattron(getWin(), COLOR_PAIR(s->getColor()));
         wprintw(getWin(), "  ");
@@ -109,11 +110,11 @@ void BorderWindow::addNextBlock(Block block)
 
 /*
     Remove the current drawn block from the UI
-    Should be called before you draw another next block 
+    Should be called before you draw another "next" block 
 */
 void BorderWindow::removeCurrentBlock()
 {
-    wattron(getWin(), COLOR_BLACK);
+    wattron(getWin(), EMPTY_CELL);
     while (!curPieceCords.empty())
     {
         auto cords = curPieceCords.back();
@@ -122,5 +123,5 @@ void BorderWindow::removeCurrentBlock()
         wprintw(getWin(), "  ");
         
     }
-    wattroff(getWin(), COLOR_BLACK);
+    wattroff(getWin(), EMPTY_CELL);
 }
