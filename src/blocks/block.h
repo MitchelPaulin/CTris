@@ -5,20 +5,30 @@
 #include <vector>
 #include "square.h"
 #include <curses.h>
-
 class Block
 {
-protected:
-    std::vector<Square*> blocks;
 
 public:
+    enum Direction
+    {
+        DOWN,
+        LEFT,
+        UP,
+        RIGHT
+    };
+    
     Block();
     ~Block();
     void moveLeft();
     void moveRight();
     void moveDown();
-    const std::vector<Square*> getSquares();
+    Direction getDir() { return dir; };
+    const std::vector<Square *> getSquares();
     virtual void rotate(){}; //override
+
+protected:
+    std::vector<Square *> blocks;
+    Direction dir = DOWN;
 };
 
 #endif
