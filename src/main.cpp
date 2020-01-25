@@ -10,9 +10,9 @@
 
 void reInit(const std::list<Window> &Windows);
 void initColors();
-bool canMoveRight(Block block, GameWindow& win);
-bool canMoveLeft(Block block, GameWindow& win);
-bool canMoveDown(Block block, GameWindow& win);
+bool canMoveRight(Block block, GameWindow &win);
+bool canMoveLeft(Block block, GameWindow &win);
+bool canMoveDown(Block block, GameWindow &win);
 Block createNewBlock(int num);
 
 int main(void)
@@ -36,9 +36,9 @@ int main(void)
 	//Prevent wgetch from being a blocking call
 	nodelay(bannerWin.getWin(), TRUE);
 
-	//Create the two initial pieces 
+	//Create the two initial pieces
 	Block curPiece = createNewBlock(dist6(rng));
-	Block nextPiece = createNewBlock(dist6(rng)); 
+	Block nextPiece = createNewBlock(dist6(rng));
 	bannerWin.addNextBlock(nextPiece);
 
 	int score = 0;
@@ -48,7 +48,7 @@ int main(void)
 	//Game loop
 	for (;;)
 	{
-		//Erase block so we can redraw it in new location 
+		//Erase block so we can redraw it in new location
 		gameWin.eraseBlock(curPiece);
 
 		//Process user input
@@ -69,7 +69,7 @@ int main(void)
 		}
 		else if (userInput == 'w' || userInput == 'W')
 		{
-			curPiece.rotate(); //Implement this function 
+			curPiece.rotate(); //Implement this function
 		}
 		else if (userInput == 's' || userInput == 'S')
 		{
@@ -85,11 +85,18 @@ int main(void)
 		}
 		else if (userInput == 'e' || userInput == 'E')
 		{
-			break; //Exit 
+			break; //Exit
+		}
+		else if (userInput == ' ') //spacebar pressed
+		{
+			while (canMoveDown(curPiece, gameWin))
+			{
+				curPiece.moveDown();
+			}
+			downTimer = BLOCK_FALL_SPEED; //block reached bottom, force spawn 
 		}
 
-
-		//Move block down 
+		//Move block down
 		if (downTimer > BLOCK_FALL_SPEED)
 		{
 			if (canMoveDown(curPiece, gameWin))
@@ -103,7 +110,7 @@ int main(void)
 				gameWin.drawBlock(curPiece);
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
-				bannerWin.addNextBlock(nextPiece); 
+				bannerWin.addNextBlock(nextPiece);
 				continue;
 			}
 		}
@@ -151,7 +158,7 @@ Block createNewBlock(int num)
 /*
 	Determin if given the current block whether or not we can move right 
 */
-bool canMoveRight(Block block, GameWindow& win)
+bool canMoveRight(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())
 	{
@@ -166,7 +173,7 @@ bool canMoveRight(Block block, GameWindow& win)
 /*
 	Determine if given the current block whether or not we can move left
 */
-bool canMoveLeft(Block block, GameWindow& win)
+bool canMoveLeft(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())
 	{
@@ -181,7 +188,7 @@ bool canMoveLeft(Block block, GameWindow& win)
 /*
 	Determine if given the current block whether or not we can move down
 */
-bool canMoveDown(Block block, GameWindow& win)
+bool canMoveDown(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())
 	{
