@@ -6,9 +6,9 @@
 
 const int scoreX = 31;
 const int scoreY = 7;
-const int length = 20;
+const int length = 19;
 const int nextX = 31;
-const int nextY = 20;
+const int nextY = 19;
 std::vector<std::pair<int, int>> curPieceCords;
 const char *bannerString[length] = {
     "  ___  _____      _     ",
@@ -19,8 +19,7 @@ const char *bannerString[length] = {
     "",
     "Score: 0",
     "",
-    "Controls",
-    "",
+    "__Controls__",
     "Left:        A",
     "Right:       D",
     "Down:        S",
@@ -77,16 +76,22 @@ void BorderWindow::initWindow()
 */
 void BorderWindow::addNextBlock(Block block)
 {
-    //First, remove the currently drawn block 
+    //First, remove the currently drawn block
     removeCurrentBlock();
 
-    //Find the leftmost block and use it as a drawing anchor
-    Square *anchor = block.getSquares()[0];
+    //Find the leftmost and topmost block and use it as a drawing anchor
+    Square *xAnchor = block.getSquares()[0];
+    Square *yAnchor = block.getSquares()[0];
     for (Square *s : block.getSquares())
     {
-        if (anchor->getCol() > s->getCol())
+        if (xAnchor->getCol() > s->getCol())
         {
-            anchor = s;
+            xAnchor = s;
+        }
+
+        if (yAnchor->getRow() < s->getRow())
+        {
+            yAnchor = s;
         }
     }
 
@@ -94,11 +99,11 @@ void BorderWindow::addNextBlock(Block block)
     for (Square *s : block.getSquares())
     {
         //save the locatoin of the currently draw piece so we can erase it without having to re render the whole UI
-        int x = (s->getCol() - anchor->getCol()) * 2 + nextX; //multiply by 2 because each box takes up two spaces
-        int y = nextY - (s->getRow() - anchor->getRow());
+        int x = (s->getCol() - xAnchor->getCol()) * 2 + nextX; //multiply by 2 because each box takes up two spaces
+        int y = nextY - (s->getRow() - yAnchor->getRow());
         curPieceCords.push_back(std::pair<int, int>(y, x));
 
-        //draw block 
+        //draw block
         wmove(getWin(), y, x);
         wattron(getWin(), COLOR_PAIR(s->getColor()));
         wprintw(getWin(), "  ");
@@ -121,7 +126,6 @@ void BorderWindow::removeCurrentBlock()
         curPieceCords.pop_back();
         wmove(getWin(), cords.first, cords.second);
         wprintw(getWin(), "  ");
-        
     }
     wattroff(getWin(), EMPTY_CELL);
 }
