@@ -1,7 +1,14 @@
 #include "block.h"
 
 Block::Block() {}
-Block::~Block() {}
+
+Block::~Block()
+{
+    while (!Block::blocks.empty())
+    {
+        blocks.pop_back();
+    }
+}
 
 //return an non editable vector of this block
 
@@ -10,8 +17,8 @@ Block::~Block() {}
 */
 void Block::moveDown()
 {
-    //move every piece one down 
-    for (Square* s : blocks)
+    //move every piece one down
+    for (Square *s : blocks)
     {
         s->bumpDown();
     }
@@ -23,7 +30,7 @@ void Block::moveDown()
 void Block::moveRight()
 {
     //move every piece one to the right
-    for (Square* s : blocks)
+    for (Square *s : blocks)
     {
         s->bumpRight();
     }
@@ -35,13 +42,13 @@ void Block::moveRight()
 void Block::moveLeft()
 {
     //move every piece one to the left
-    for (Square* s : blocks)
+    for (Square *s : blocks)
     {
         s->bumpLeft();
     }
 }
 
-const std::vector<Square*> Block::getSquares()
+const std::vector<Square *> Block::getSquares()
 {
     return blocks;
 }

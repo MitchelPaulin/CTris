@@ -12,4 +12,5 @@ SquarePiece::~SquarePiece() {}
 
 void SquarePiece::rotate()
 {
+    //square piece does not rotate 
 }
