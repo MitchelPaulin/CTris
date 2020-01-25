@@ -28,6 +28,7 @@ int main(void)
 
 	//Create a Tpiece just to make sure we can
 	Block curPiece = TPiece();
+	bannerWin.addNextBlock(curPiece); 
 
 	int score = 0;
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
