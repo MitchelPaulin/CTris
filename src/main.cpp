@@ -9,6 +9,8 @@
 
 void reInit(const std::list<Window> &Windows);
 void initColors();
+bool canMoveRight(Block block);
+bool canMoveLeft(Block block);
 
 int main(void)
 {
@@ -28,7 +30,7 @@ int main(void)
 
 	//Create a Tpiece just to make sure we can
 	Block curPiece = SnakeLeftPiece();
-	bannerWin.addNextBlock(curPiece); 
+	bannerWin.addNextBlock(curPiece);
 
 	int score = 0;
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
@@ -54,11 +56,17 @@ int main(void)
 		userInput = wgetch(bannerWin.getWin());
 		if (userInput == 'd' || userInput == 'D')
 		{
-			curPiece.moveRight();
+			if (canMoveRight(curPiece))
+			{
+				curPiece.moveRight();
+			}
 		}
 		else if (userInput == 'a' || userInput == 'A')
 		{
-			curPiece.moveLeft();
+			if (canMoveLeft(curPiece))
+			{
+				curPiece.moveLeft();
+			}
 		}
 		else if (userInput == 'w' || userInput == 'W')
 		{
@@ -106,4 +114,31 @@ void initColors()
 	{
 		init_pair(i, i, i);
 	}
+}
+
+/*
+	Determin if given the current block whether or not we can move right 
+*/
+bool canMoveRight(Block block)
+{
+	for (Square *s : block.getSquares())
+	{
+		if (s->getCol() == BOARD_WIDTH - 1)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool canMoveLeft(Block block)
+{
+	for (Square *s : block.getSquares())
+	{
+		if (s->getCol() <= 0)
+		{
+			return false;
+		}
+	}
+	return true;
 }
