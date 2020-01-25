@@ -2,6 +2,7 @@
 #include <vector>
 #include <unistd.h>
 #include <list>
+#include <random>
 #include "windows/border_window.h"
 #include "windows/game_window.h"
 #include "../include/constants.h"
@@ -11,6 +12,8 @@ void reInit(const std::list<Window> &Windows);
 void initColors();
 bool canMoveRight(Block block);
 bool canMoveLeft(Block block);
+bool canMoveDown(Block block);
+Block createNewBlock(int num);
 
 int main(void)
 {
@@ -19,6 +22,11 @@ int main(void)
 	start_color(); //enable colors
 	initColors();
 	noecho();
+
+	//Initialize random number generator
+	std::random_device dev;
+	std::mt19937 rng(dev());
+	std::uniform_int_distribution<std::mt19937::result_type> dist6(1, BLOCK_TYPES);
 
 	//Construct windows
 	BorderWindow bannerWin = BorderWindow(HEIGHT, WIDTH, GAME_WIDTH, 0);
@@ -29,8 +37,8 @@ int main(void)
 	nodelay(bannerWin.getWin(), TRUE);
 
 	//Create a Tpiece just to make sure we can
-	Block curPiece = SnakeLeftPiece();
-	bannerWin.addNextBlock(curPiece);
+	Block curPiece = createNewBlock(dist6(rng));
+	bannerWin.addNextBlock(createNewBlock(dist6(rng)));
 
 	int score = 0;
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
@@ -44,8 +52,15 @@ int main(void)
 
 		if (downTimer > BLOCK_FALL_SPEED)
 		{
-			curPiece.moveDown();
-			downTimer = 0;
+			if (canMoveDown(curPiece))
+			{
+				curPiece.moveDown();
+				downTimer = 0;
+			}
+			else
+			{
+				//piece has reached the bottom, spawn new spiece
+			}
 		}
 		else
 		{
@@ -74,7 +89,11 @@ int main(void)
 		}
 		else if (userInput == 's' || userInput == 'S')
 		{
-			/* code */
+			if (canMoveDown(curPiece))
+			{
+				curPiece.moveDown();
+				downTimer = 0; //reset down timer
+			}
 		}
 		else if (userInput == 'r' || userInput == 'R')
 		{
@@ -92,6 +111,77 @@ int main(void)
 	}
 	endwin();
 	return 0;
+}
+
+/*
+	Returns a new tetris block 
+*/
+Block createNewBlock(int num)
+{
+	switch (num)
+	{
+	case 1:
+		return LLeftPiece();
+	case 2:
+		return LRightPiece();
+	case 3:
+		return LongPiece();
+	case 4:
+		return SnakeLeftPiece();
+	case 5:
+		return SnakeRightPiece();
+	case 6:
+		return SquarePiece();
+	case 7:
+		return TPiece();
+	default:
+		return TPiece();
+	}
+}
+
+/*
+	Determin if given the current block whether or not we can move right 
+*/
+bool canMoveRight(Block block)
+{
+	for (Square *s : block.getSquares())
+	{
+		if (s->getCol() == BOARD_WIDTH - 1)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+/*
+	Determine if given the current block whether or not we can move left
+*/
+bool canMoveLeft(Block block)
+{
+	for (Square *s : block.getSquares())
+	{
+		if (s->getCol() <= 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+/*
+	Determine if given the current block whether or not we can move down
+*/
+bool canMoveDown(Block block)
+{
+	for (Square *s : block.getSquares())
+	{
+		if (s->getRow() <= 0)
+		{
+			return false;
+		}
+	}
+	return true;
 }
 
 /*
@@ -114,31 +204,4 @@ void initColors()
 	{
 		init_pair(i, i, i);
 	}
-}
-
-/*
-	Determin if given the current block whether or not we can move right 
-*/
-bool canMoveRight(Block block)
-{
-	for (Square *s : block.getSquares())
-	{
-		if (s->getCol() == BOARD_WIDTH - 1)
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-bool canMoveLeft(Block block)
-{
-	for (Square *s : block.getSquares())
-	{
-		if (s->getCol() <= 0)
-		{
-			return false;
-		}
-	}
-	return true;
 }

@@ -7,3 +7,4 @@
 #define BOARD_HEIGHT 26
 #define CLOCK_SPEED 10000
 #define BLOCK_FALL_SPEED 75
+#define BLOCK_TYPES 7
