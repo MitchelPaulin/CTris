@@ -1,4 +1,4 @@
-//The cyan right snake piece 
+//The blue right snake piece 
 #ifndef SNAKE_RIGHT_PIECE_H
 #define SNAKE_RIGHT_PIECE_H
 

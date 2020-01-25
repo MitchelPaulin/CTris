@@ -27,7 +27,7 @@ int main(void)
 	nodelay(bannerWin.getWin(), TRUE);
 
 	//Create a Tpiece just to make sure we can
-	Block curPiece = SnakeRightPiece();
+	Block curPiece = SnakeLeftPiece();
 	bannerWin.addNextBlock(curPiece); 
 
 	int score = 0;

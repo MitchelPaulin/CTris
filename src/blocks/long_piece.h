@@ -1,5 +1,4 @@
-//The blue long piece block
-
+//The cyan long piece block
 #ifndef BLUE_PIECE_H
 #define BLUE_PIECE_H
 

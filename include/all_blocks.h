@@ -4,3 +4,4 @@
 #include "../src/blocks/l_left_piece.h"
 #include "../src/blocks/l_right_piece.h"
 #include "../src/blocks/snake_right_piece.h"
+#include "../src/blocks/snake_left_piece.h"
