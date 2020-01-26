@@ -124,6 +124,8 @@ int main(void)
 
 				//Spawn next piece and setup UI
 				gameWin.drawBlock(*curPiece);
+				//check if we need to remove any lines first 
+				gameWin.removeCompletedLines(); 
 				delete(curPiece); 
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
@@ -154,6 +156,7 @@ int main(void)
 */
 Block* createNewBlock(int num)
 {
+	return new SquarePiece(); 
 	switch (num)
 	{
 	case 1:

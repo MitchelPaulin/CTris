@@ -64,7 +64,7 @@ void GameWindow::render()
 */
 void GameWindow::eraseBlock(Block block)
 {
-    for (Square* s : block.getSquares())
+    for (Square *s : block.getSquares())
     {
         board[s->getRow()][s->getCol()] = EMPTY_CELL;
     }
@@ -75,10 +75,55 @@ void GameWindow::eraseBlock(Block block)
 */
 void GameWindow::drawBlock(Block block)
 {
-    for (Square* s : block.getSquares())
-    { 
+    for (Square *s : block.getSquares())
+    {
         board[s->getRow()][s->getCol()] = s->getColor();
     }
+}
+
+/*
+    Remove any completed lines from the game 
+    Returns the number of liens removed for scoring purposes 
+*/
+int GameWindow::removeCompletedLines()
+{
+    int linesRemoved = 0;
+    //board[0][0] = 7;
+    for (int r = 0; r < ROWS; r++)
+    {
+        bool lineFull = true;
+        for (int c = 0; c < COLS; c++)
+        {
+            if (board[r][c] == EMPTY_CELL)
+            {
+                lineFull = false;
+                break;
+            }
+        }
+        //Erase line
+        if (lineFull)
+        {
+            linesRemoved++;
+
+            for (int c = 0; c < COLS; c++)
+            {
+                board[r][c] = EMPTY_CELL;
+            }
+            //Everything above this lines must be shifted one down
+            for (int i = r; i < ROWS; i++)
+            {
+                for (int j = 0; j < COLS; j++)
+                {
+                    board[i][j] = board[i + 1][j];
+                }
+            }
+
+            //Since we removed a row we must check the row we visited again
+            r--;
+        }
+    }
+
+    return linesRemoved;
 }
 
 /*
