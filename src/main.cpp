@@ -13,7 +13,8 @@ void initColors();
 bool canMoveRight(Block block, GameWindow &win);
 bool canMoveLeft(Block block, GameWindow &win);
 bool canMoveDown(Block block, GameWindow &win);
-Block* createNewBlock(int num);
+Block *createNewBlock(int num);
+int linesToScore(int lines); 
 
 int main(void)
 {
@@ -37,8 +38,8 @@ int main(void)
 	nodelay(bannerWin.getWin(), TRUE);
 
 	//Create the two initial pieces
-	Block* curPiece = createNewBlock(dist6(rng));
-	Block* nextPiece = createNewBlock(dist6(rng));
+	Block *curPiece = createNewBlock(dist6(rng));
+	Block *nextPiece = createNewBlock(dist6(rng));
 	bannerWin.addNextBlock(*nextPiece);
 
 	int score = 0;
@@ -107,7 +108,7 @@ int main(void)
 			else
 			{
 				//Piece reached bottom, check if player looses
-				//If any block is still "in play" then continue 
+				//If any block is still "in play" then continue
 				bool lost = true;
 				for (Square *s : curPiece->getSquares())
 				{
@@ -119,14 +120,24 @@ int main(void)
 
 				if (lost)
 				{
-					break; //just exit program on loss for now 
+					break; //just exit program on loss for now
 				}
 
-				//Spawn next piece and setup UI
 				gameWin.drawBlock(*curPiece);
-				//check if we need to remove any lines first 
-				gameWin.removeCompletedLines(); 
-				delete(curPiece); 
+
+
+				//check if we need to remove any lines first
+				int lines = gameWin.removeCompletedLines();
+
+				//update score 
+				if (lines > 0)
+				{
+					score += linesToScore(lines);
+					bannerWin.updateScore(score); 
+				}
+
+				//setup for next block 
+				delete (curPiece);
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
 				bannerWin.addNextBlock(*nextPiece);
@@ -145,8 +156,8 @@ int main(void)
 	}
 
 	//exit game
-	delete(curPiece);
-	delete(nextPiece); 
+	delete (curPiece);
+	delete (nextPiece);
 	endwin();
 	return 0;
 }
@@ -154,9 +165,9 @@ int main(void)
 /*
 	Returns a new tetris block 
 */
-Block* createNewBlock(int num)
+Block *createNewBlock(int num)
 {
-	return new SquarePiece(); 
+	return new SquarePiece();
 	switch (num)
 	{
 	case 1:
@@ -175,6 +186,27 @@ Block* createNewBlock(int num)
 		return new TPiece();
 	default:
 		return new TPiece();
+	}
+}
+
+/*
+	Returns the score awarded for clearing a particular number of lines 
+	Uses the Original BPS scoring system (https://tetris.wiki/Scoring)
+*/
+int linesToScore(int lines)
+{
+	switch (lines)
+	{
+	case 1:
+		return 40;
+	case 2:
+		return 100;
+	case 3:
+		return 300;
+	case 4:
+		return 1200;
+	default:
+		return 0;
 	}
 }
 
