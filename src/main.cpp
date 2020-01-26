@@ -13,7 +13,7 @@ void initColors();
 bool canMoveRight(Block block, GameWindow &win);
 bool canMoveLeft(Block block, GameWindow &win);
 bool canMoveDown(Block block, GameWindow &win);
-Block createNewBlock(int num);
+Block* createNewBlock(int num);
 
 int main(void)
 {
@@ -37,9 +37,9 @@ int main(void)
 	nodelay(bannerWin.getWin(), TRUE);
 
 	//Create the two initial pieces
-	Block curPiece = createNewBlock(dist6(rng));
-	Block nextPiece = createNewBlock(dist6(rng));
-	bannerWin.addNextBlock(nextPiece);
+	Block* curPiece = createNewBlock(dist6(rng));
+	Block* nextPiece = createNewBlock(dist6(rng));
+	bannerWin.addNextBlock(*nextPiece);
 
 	int score = 0;
 	int downTimer = 0; //once this hits a certain number of loops we move the block down
@@ -49,33 +49,33 @@ int main(void)
 	for (;;)
 	{
 		//Erase block so we can redraw it in new location
-		gameWin.eraseBlock(curPiece);
+		gameWin.eraseBlock(*curPiece);
 
 		//Process user input
 		userInput = wgetch(bannerWin.getWin());
 		if (userInput == 'd' || userInput == 'D')
 		{
-			if (canMoveRight(curPiece, gameWin))
+			if (canMoveRight(*curPiece, gameWin))
 			{
-				curPiece.moveRight();
+				curPiece->moveRight();
 			}
 		}
 		else if (userInput == 'a' || userInput == 'A')
 		{
-			if (canMoveLeft(curPiece, gameWin))
+			if (canMoveLeft(*curPiece, gameWin))
 			{
-				curPiece.moveLeft();
+				curPiece->moveLeft();
 			}
 		}
 		else if (userInput == 'w' || userInput == 'W')
 		{
-			curPiece.rotate(); //Implement this function
+			curPiece->rotate(); //Implement this function
 		}
 		else if (userInput == 's' || userInput == 'S')
 		{
-			if (canMoveDown(curPiece, gameWin))
+			if (canMoveDown(*curPiece, gameWin))
 			{
-				curPiece.moveDown();
+				curPiece->moveDown();
 				downTimer = 0; //Reset down timer
 			}
 		}
@@ -89,9 +89,9 @@ int main(void)
 		}
 		else if (userInput == ' ') //spacebar pressed
 		{
-			while (canMoveDown(curPiece, gameWin))
+			while (canMoveDown(*curPiece, gameWin))
 			{
-				curPiece.moveDown();
+				curPiece->moveDown();
 			}
 			downTimer = BLOCK_FALL_SPEED; //block reached bottom, force spawn
 		}
@@ -99,9 +99,9 @@ int main(void)
 		//Move block down
 		if (downTimer > BLOCK_FALL_SPEED)
 		{
-			if (canMoveDown(curPiece, gameWin))
+			if (canMoveDown(*curPiece, gameWin))
 			{
-				curPiece.moveDown();
+				curPiece->moveDown();
 				downTimer = 0;
 			}
 			else
@@ -109,7 +109,7 @@ int main(void)
 				//Piece reached bottom, check if player looses
 				//If any block is still "in play" then continue 
 				bool lost = true;
-				for (Square *s : curPiece.getSquares())
+				for (Square *s : curPiece->getSquares())
 				{
 					if (s->getRow() < BOARD_TOP - 2)
 					{
@@ -123,10 +123,11 @@ int main(void)
 				}
 
 				//Spawn next piece and setup UI
-				gameWin.drawBlock(curPiece);
+				gameWin.drawBlock(*curPiece);
+				delete(curPiece); 
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
-				bannerWin.addNextBlock(nextPiece);
+				bannerWin.addNextBlock(*nextPiece);
 				continue;
 			}
 		}
@@ -136,11 +137,14 @@ int main(void)
 		}
 
 		//rerender screen with new block location
-		gameWin.drawBlock(curPiece);
+		gameWin.drawBlock(*curPiece);
 		gameWin.render();
 		usleep(CLOCK_SPEED);
 	}
 
+	//exit game
+	delete(curPiece);
+	delete(nextPiece); 
 	endwin();
 	return 0;
 }
@@ -148,26 +152,26 @@ int main(void)
 /*
 	Returns a new tetris block 
 */
-Block createNewBlock(int num)
+Block* createNewBlock(int num)
 {
 	switch (num)
 	{
 	case 1:
-		return LLeftPiece();
+		return new LLeftPiece();
 	case 2:
-		return LRightPiece();
+		return new LRightPiece();
 	case 3:
-		return LongPiece();
+		return new LongPiece();
 	case 4:
-		return SnakeLeftPiece();
+		return new SnakeLeftPiece();
 	case 5:
-		return SnakeRightPiece();
+		return new SnakeRightPiece();
 	case 6:
-		return SquarePiece();
+		return new SquarePiece();
 	case 7:
-		return TPiece();
+		return new TPiece();
 	default:
-		return TPiece();
+		return new TPiece();
 	}
 }
 
