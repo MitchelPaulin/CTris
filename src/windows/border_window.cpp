@@ -56,7 +56,7 @@ void BorderWindow::updateScore(int s)
 */
 void BorderWindow::initWindow()
 {
-
+    wclear(getWin()); 
     //Draw every line and also center it within the frame
     for (int i = 0; i < length; i++)
     {

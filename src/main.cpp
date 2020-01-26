@@ -1,20 +1,18 @@
 #include <curses.h>
 #include <vector>
 #include <unistd.h>
-#include <list>
 #include <random>
 #include "windows/border_window.h"
 #include "windows/game_window.h"
 #include "../include/constants.h"
 #include "../include/all_blocks.h"
 
-void reInit(const std::list<Window> &Windows);
 void initColors();
 bool canMoveRight(Block block, GameWindow &win);
 bool canMoveLeft(Block block, GameWindow &win);
 bool canMoveDown(Block block, GameWindow &win);
 Block *createNewBlock(int num);
-int linesToScore(int lines); 
+int linesToScore(int lines);
 
 int main(void)
 {
@@ -23,6 +21,7 @@ int main(void)
 	start_color(); //enable colors
 	initColors();
 	noecho();
+	curs_set(0); //hide cursor
 
 	//Initialize random number generator
 	std::random_device dev;
@@ -30,40 +29,40 @@ int main(void)
 	std::uniform_int_distribution<std::mt19937::result_type> dist6(1, BLOCK_TYPES);
 
 	//Construct windows
-	BorderWindow bannerWin = BorderWindow(HEIGHT, WIDTH, GAME_WIDTH, 0);
-	GameWindow gameWin = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
-	gameWin.render();
+	BorderWindow UIWindow = BorderWindow(HEIGHT, WIDTH, GAME_WIDTH, 0);
+	GameWindow gameWindow = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
+	gameWindow.render();
 
 	//Prevent wgetch from being a blocking call
-	nodelay(bannerWin.getWin(), TRUE);
+	nodelay(UIWindow.getWin(), TRUE);
 
 	//Create the two initial pieces
 	Block *curPiece = createNewBlock(dist6(rng));
 	Block *nextPiece = createNewBlock(dist6(rng));
-	bannerWin.addNextBlock(*nextPiece);
+	UIWindow.addNextBlock(*nextPiece);
 
 	int score = 0;
-	int downTimer = 0; //once this hits a certain number of loops we move the block down
+	int downTimer = 0; //Once this hits a certain number of loops we move the block down
 	char userInput;
 
 	//Game loop
 	for (;;)
 	{
 		//Erase block so we can redraw it in new location
-		gameWin.eraseBlock(*curPiece);
+		gameWindow.eraseBlock(*curPiece);
 
 		//Process user input
-		userInput = wgetch(bannerWin.getWin());
+		userInput = wgetch(UIWindow.getWin());
 		if (userInput == 'd' || userInput == 'D')
 		{
-			if (canMoveRight(*curPiece, gameWin))
+			if (canMoveRight(*curPiece, gameWindow))
 			{
 				curPiece->moveRight();
 			}
 		}
 		else if (userInput == 'a' || userInput == 'A')
 		{
-			if (canMoveLeft(*curPiece, gameWin))
+			if (canMoveLeft(*curPiece, gameWindow))
 			{
 				curPiece->moveLeft();
 			}
@@ -74,7 +73,7 @@ int main(void)
 		}
 		else if (userInput == 's' || userInput == 'S')
 		{
-			if (canMoveDown(*curPiece, gameWin))
+			if (canMoveDown(*curPiece, gameWindow))
 			{
 				curPiece->moveDown();
 				downTimer = 0; //Reset down timer
@@ -82,7 +81,16 @@ int main(void)
 		}
 		else if (userInput == 'r' || userInput == 'R')
 		{
-			/* code */
+			//Reset game
+			delete (curPiece);
+			delete (nextPiece);
+			curPiece = createNewBlock(dist6(rng));
+			nextPiece = createNewBlock(dist6(rng));
+			score = 0;
+			gameWindow.initWindow();
+			UIWindow.initWindow();
+			UIWindow.addNextBlock(*nextPiece);
+			continue;
 		}
 		else if (userInput == 'e' || userInput == 'E')
 		{
@@ -90,7 +98,7 @@ int main(void)
 		}
 		else if (userInput == ' ') //spacebar pressed
 		{
-			while (canMoveDown(*curPiece, gameWin))
+			while (canMoveDown(*curPiece, gameWindow))
 			{
 				curPiece->moveDown();
 			}
@@ -100,7 +108,7 @@ int main(void)
 		//Move block down
 		if (downTimer > BLOCK_FALL_SPEED)
 		{
-			if (canMoveDown(*curPiece, gameWin))
+			if (canMoveDown(*curPiece, gameWindow))
 			{
 				curPiece->moveDown();
 				downTimer = 0;
@@ -123,24 +131,23 @@ int main(void)
 					break; //just exit program on loss for now
 				}
 
-				gameWin.drawBlock(*curPiece);
-
+				gameWindow.drawBlock(*curPiece);
 
 				//check if we need to remove any lines first
-				int lines = gameWin.removeCompletedLines();
+				int lines = gameWindow.removeCompletedLines();
 
-				//update score 
+				//update score
 				if (lines > 0)
 				{
 					score += linesToScore(lines);
-					bannerWin.updateScore(score); 
+					UIWindow.updateScore(score);
 				}
 
-				//setup for next block 
+				//setup for next block
 				delete (curPiece);
 				curPiece = nextPiece;
 				nextPiece = createNewBlock(dist6(rng));
-				bannerWin.addNextBlock(*nextPiece);
+				UIWindow.addNextBlock(*nextPiece);
 				continue;
 			}
 		}
@@ -149,13 +156,13 @@ int main(void)
 			downTimer++;
 		}
 
-		//rerender screen with new block location
-		gameWin.drawBlock(*curPiece);
-		gameWin.render();
+		//re render screen with new block location
+		gameWindow.drawBlock(*curPiece);
+		gameWindow.render();
 		usleep(CLOCK_SPEED);
 	}
 
-	//exit game
+	//Exit game
 	delete (curPiece);
 	delete (nextPiece);
 	endwin();
@@ -167,7 +174,6 @@ int main(void)
 */
 Block *createNewBlock(int num)
 {
-	return new SquarePiece();
 	switch (num)
 	{
 	case 1:
@@ -253,17 +259,6 @@ bool canMoveDown(Block block, GameWindow &win)
 		}
 	}
 	return true;
-}
-
-/*
-	Call the overriden function of every window to reinitialize it 
-*/
-void reInit(const std::list<Window> &Windows)
-{
-	for (auto w : Windows)
-	{
-		w.initWindow();
-	}
 }
 
 /*
