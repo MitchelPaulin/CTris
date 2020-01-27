@@ -20,6 +20,7 @@ public:
     void test();
     void eraseBlock(Block); 
     void drawBlock(Block);
+    bool blockCollides(Block); 
     int removeCompletedLines(); 
     bool isCellEmpty(int r, int c) const { return board[r][c] == EMPTY_CELL; };
 

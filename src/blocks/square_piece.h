@@ -11,7 +11,8 @@ class SquarePiece : public Block
 public:
     static const BLOCK_COLOR color = COLOR_YELLOW;
     SquarePiece();
-    Block *rotate() override { return this; } //Square piece does not rotate 
+    SquarePiece(SquarePiece* piece); 
+    Block *rotate() override { return new SquarePiece(this); } //Square piece does not rotate 
 };
 
 #endif

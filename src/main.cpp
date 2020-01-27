@@ -69,12 +69,18 @@ int main(void)
 		}
 		else if (userInput == 'w' || userInput == 'W')
 		{
-			Block *rotatePiece = curPiece->rotate();
-			if (rotatePiece != curPiece)
+			Block *rotatedPiece = curPiece->rotate();
+			//If we can rotate the piece 
+			if (!gameWindow.blockCollides(*rotatedPiece))
 			{
 				gameWindow.eraseBlock(*curPiece);
 				delete (curPiece);
-				curPiece = rotatePiece;
+				curPiece = rotatedPiece;
+				downTimer = 0; 
+			}
+			else //Could not rotate piece 
+			{
+				delete (rotatedPiece);
 			}
 		}
 		else if (userInput == 's' || userInput == 'S')

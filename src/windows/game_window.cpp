@@ -82,13 +82,27 @@ void GameWindow::drawBlock(Block block)
 }
 
 /*
+    Determine if given the current block whether or not it collides with existing blocks
+*/
+bool GameWindow::blockCollides(Block block)
+{
+    for (Square *s : block.getSquares())
+    {
+        if (!isCellEmpty(s->getRow(), s->getCol()))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/*
     Remove any completed lines from the game 
     Returns the number of liens removed for scoring purposes 
 */
 int GameWindow::removeCompletedLines()
 {
     int linesRemoved = 0;
-    //board[0][0] = 7;
     for (int r = 0; r < ROWS; r++)
     {
         bool lineFull = true;
