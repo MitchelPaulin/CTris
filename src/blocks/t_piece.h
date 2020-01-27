@@ -4,15 +4,13 @@
 
 #include "block.h"
 
-class Block; 
+class Block;
 
 class TPiece : public Block
 {
 public:
     static const BLOCK_COLOR color = COLOR_MAGENTA;
-    void rotate() override; 
     TPiece();
-    ~TPiece(); 
 };
 
 #endif

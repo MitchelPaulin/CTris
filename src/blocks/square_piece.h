@@ -4,15 +4,14 @@
 
 #include "block.h"
 
-class Block; 
+class Block;
 
 class SquarePiece : public Block
 {
 public:
     static const BLOCK_COLOR color = COLOR_YELLOW;
-    void rotate() override; 
     SquarePiece();
-    ~SquarePiece(); 
+    Block *rotate() override { return this; } //Square piece does not rotate 
 };
 
 #endif

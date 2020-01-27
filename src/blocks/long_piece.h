@@ -10,9 +10,19 @@ class LongPiece : public Block
 {
 public:
     static const BLOCK_COLOR color = COLOR_CYAN;
-    void rotate() override;
     LongPiece();
-    ~LongPiece();
+    LongPiece(std::vector<Square*>, Square* center);
+    Block *rotate() override;
+
+private:
+    enum Direction
+    {
+        UP,
+        LEFT,
+        DOWN,
+        RIGHT
+    };
+    Direction dir = Direction::RIGHT; 
 };
 
 #endif

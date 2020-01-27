@@ -69,7 +69,13 @@ int main(void)
 		}
 		else if (userInput == 'w' || userInput == 'W')
 		{
-			curPiece->rotate(); //Implement this function
+			Block *rotatePiece = curPiece->rotate();
+			if (rotatePiece != curPiece)
+			{
+				gameWindow.eraseBlock(*curPiece);
+				delete (curPiece);
+				curPiece = rotatePiece;
+			}
 		}
 		else if (userInput == 's' || userInput == 'S')
 		{

@@ -3,32 +3,26 @@
 #define BLOCK_H
 
 #include <vector>
-#include "square.h"
 #include <curses.h>
+#include "square.h"
+#include "math.h"
 class Block
 {
 
 public:
-    enum Direction
-    {
-        DOWN,
-        LEFT,
-        UP,
-        RIGHT
-    };
-    
     Block();
+    Block(std::vector<Square *>, Square*);
     ~Block();
     void moveLeft();
     void moveRight();
     void moveDown();
-    Direction getDir() { return dir; };
+    void moveUp(); 
+    virtual Block *rotate();
     const std::vector<Square *> getSquares();
-    virtual void rotate(){}; //override
 
 protected:
+    Square *centerOfRotation;
     std::vector<Square *> blocks;
-    Direction dir = DOWN;
 };
 
 #endif

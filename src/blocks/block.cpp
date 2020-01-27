@@ -2,6 +2,12 @@
 
 Block::Block() {}
 
+Block::Block(std::vector<Square *> squares, Square *center)
+{
+    blocks = squares;
+    centerOfRotation = center;
+}
+
 Block::~Block()
 {
     while (!Block::blocks.empty())
@@ -47,9 +53,43 @@ void Block::moveLeft()
 }
 
 /*
+    Attempt to move this piece up 
+*/
+void Block::moveUp()
+{
+    for (Square *s : blocks)
+    {
+        s->bumpUp();
+    }
+}
+
+/*
     Return the squares that make up this piece 
 */
 const std::vector<Square *> Block::getSquares()
 {
     return blocks;
+}
+
+/*
+    Rotate a block around a give center
+*/
+Block *Block::rotate()
+{
+    std::vector<Square *> newSquares;
+    Square *center = nullptr;
+    for (Square *s : blocks)
+    {
+        if (s == centerOfRotation)
+        {
+            center = new Square(s->getColor(), centerOfRotation->getRow(), centerOfRotation->getCol());
+            newSquares.push_back(center);
+            continue;
+        }
+
+        newSquares.push_back(Square::rotateSquareAboutCenter(centerOfRotation, s));
+    }
+
+    Block *ret = new Block(newSquares, center);
+    return ret;
 }
