@@ -17,7 +17,7 @@ public:
     GameWindow(int width, int height, int startY, int startX);
     void render();
     void initWindow();
-    void test();
+    void fillScreen();
     void eraseBlock(Block); 
     void drawBlock(Block);
     bool blockCollides(Block); 

@@ -44,15 +44,44 @@ int main(void)
 	int score = 0;
 	int downTimer = 0; //Once this hits a certain number of loops we move the block down
 	char userInput;
+	bool gameOver = false;
 
 	//Game loop
 	for (;;)
 	{
-		//Erase block so we can redraw it in new location
-		gameWindow.eraseBlock(*curPiece);
 
 		//Process user input
 		userInput = wgetch(UIWindow.getWin());
+
+		//Check for control inputs 
+		if (userInput == 'r' || userInput == 'R')
+		{
+			//Reset game
+			delete (curPiece);
+			delete (nextPiece);
+			curPiece = createNewBlock(dist6(rng));
+			nextPiece = createNewBlock(dist6(rng));
+			score = 0;
+			gameWindow.initWindow();
+			UIWindow.initWindow();
+			UIWindow.addNextBlock(*nextPiece);
+			gameOver = false;
+			continue;
+		}
+		else if (userInput == 'e' || userInput == 'E')
+		{
+			break; //Exit
+		}
+
+		if (gameOver)
+		{
+			continue;
+		}
+
+		//Erase block so we can redraw it in new location
+		gameWindow.eraseBlock(*curPiece);
+
+		//Check for block movement inputs 
 		if (userInput == 'd' || userInput == 'D')
 		{
 			if (canMoveRight(*curPiece, gameWindow))
@@ -70,14 +99,14 @@ int main(void)
 		else if (userInput == 'w' || userInput == 'W')
 		{
 			Block *rotatedPiece = curPiece->rotate();
-			//If we can rotate the piece 
+			//If we can rotate the piece
 			if (!gameWindow.blockCollides(*rotatedPiece))
 			{
 				gameWindow.eraseBlock(*curPiece);
 				delete (curPiece);
-				curPiece = rotatedPiece; 
+				curPiece = rotatedPiece;
 			}
-			else //Could not rotate piece 
+			else //Could not rotate piece
 			{
 				delete (rotatedPiece);
 			}
@@ -89,23 +118,6 @@ int main(void)
 				curPiece->moveDown();
 				downTimer = 0; //Reset down timer
 			}
-		}
-		else if (userInput == 'r' || userInput == 'R')
-		{
-			//Reset game
-			delete (curPiece);
-			delete (nextPiece);
-			curPiece = createNewBlock(dist6(rng));
-			nextPiece = createNewBlock(dist6(rng));
-			score = 0;
-			gameWindow.initWindow();
-			UIWindow.initWindow();
-			UIWindow.addNextBlock(*nextPiece);
-			continue;
-		}
-		else if (userInput == 'e' || userInput == 'E')
-		{
-			break; //Exit
 		}
 		else if (userInput == ' ') //spacebar pressed
 		{
@@ -139,7 +151,9 @@ int main(void)
 
 				if (lost)
 				{
-					break; //just exit program on loss for now
+					gameWindow.fillScreen();
+					gameWindow.render();
+					gameOver = true;
 				}
 
 				gameWindow.drawBlock(*curPiece);

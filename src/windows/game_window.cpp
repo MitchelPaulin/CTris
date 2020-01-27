@@ -142,15 +142,15 @@ int GameWindow::removeCompletedLines()
 }
 
 /*
-    Fill board with colors to test rendering  
+    Fill board with colors  
 */
-void GameWindow::test()
+void GameWindow::fillScreen()
 {
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
-            board[i][j] = i % COLOR_WHITE;
+            board[i][j] = ((i + j) % COLOR_WHITE) + 1;
         }
     }
 }
