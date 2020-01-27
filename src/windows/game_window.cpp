@@ -82,13 +82,14 @@ void GameWindow::drawBlock(Block block)
 }
 
 /*
-    Determine if given the current block whether or not it collides with existing blocks
+    Determine if given the current block whether or not it is in a valid position
 */
 bool GameWindow::blockCollides(Block block)
 {
     for (Square *s : block.getSquares())
     {
-        if (!isCellEmpty(s->getRow(), s->getCol()))
+        //position full 
+        if (s->getRow() < 0 || s->getRow() >= ROWS || s->getCol() < 0 || s->getCol() >= COLS || !isCellEmpty(s->getRow(), s->getCol()))
         {
             return true;
         }

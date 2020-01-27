@@ -75,8 +75,7 @@ int main(void)
 			{
 				gameWindow.eraseBlock(*curPiece);
 				delete (curPiece);
-				curPiece = rotatedPiece;
-				downTimer = 0; 
+				curPiece = rotatedPiece; 
 			}
 			else //Could not rotate piece 
 			{
