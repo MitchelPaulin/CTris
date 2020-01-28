@@ -14,5 +14,5 @@ $(B_DIR)/square.cpp $(B_DIR)/block.cpp $(B_DIR)/t_piece.cpp $(B_DIR)/long_piece.
 $(B_DIR)/square_piece.cpp $(B_DIR)/l_left_piece.cpp $(B_DIR)/l_right_piece.cpp $(B_DIR)/snake_right_piece.cpp \
 $(B_DIR)/snake_left_piece.cpp
 
-all: ${COMPILE_BLOCKS} $(COMPILE_WINDOWS) src/main.cpp
+install: ${COMPILE_BLOCKS} $(COMPILE_WINDOWS) src/main.cpp
 	$(CC) -o $(OUTPUT) ${COMPILE_BLOCKS} $(COMPILE_WINDOWS) src/main.cpp $(CFLAGS)
