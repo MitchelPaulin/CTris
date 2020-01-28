@@ -49,7 +49,8 @@ int main(void)
 	//Game loop
 	for (;;)
 	{
-
+		usleep(CLOCK_SPEED);
+		
 		//Process user input
 		userInput = wgetch(UIWindow.getWin());
 
@@ -184,7 +185,6 @@ int main(void)
 		//re render screen with new block location
 		gameWindow.drawBlock(*curPiece);
 		gameWindow.render();
-		usleep(CLOCK_SPEED);
 	}
 
 	//Exit game
