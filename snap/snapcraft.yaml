@@ -1,0 +1,20 @@
+name: ctris
+version: '1.0'
+summary: A Tetris clone written in C++
+description: |
+  A minimal Tetris game written to run in a standard 80x24 terminal. (https://github.com/MitchelPaulin/CTris)
+
+grade: stable # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+base: core18
+
+parts:
+  ctris:
+    plugin: make 
+    source-type: git
+    source: https://github.com/MitchelPaulin/CTris
+    build-packages: [libncurses5-dev, libncursesw5-dev, g++, make]
+
+apps:
+  ctris:
+    command: ../bin/ctris
