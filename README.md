@@ -1,5 +1,5 @@
 # CTris
-A command line Tetris program written in C++. Made to work in the standard 80x24 terminal of most linux systems. Also works pretty well on the Windows Linux subsystem. Implemented custom rendering collision detection and rotation algorithms.
+A command line Tetris program written in C++. Made to work in the standard 80x24 terminal of most linux systems. Also works pretty well on the Windows Linux subsystem. Implemented custom rendering, collision detection and rotation algorithms.
 
 ![demo](demo/demo.png)
 ![gameover](demo/demo_gameover.png)
