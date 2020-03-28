@@ -15,8 +15,8 @@ public:
     BLOCK_COLOR getColor();
     int getRow();
     int getCol();
-    int setRow(int row);
-    int setCol(int col);
+    void setRow(int row);
+    void setCol(int col);
     void bumpLeft();
     void bumpRight();
     void bumpDown();

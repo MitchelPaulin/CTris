@@ -5,7 +5,7 @@ description: |
   A minimal Tetris game written to run in a standard 80x24 terminal. (https://github.com/MitchelPaulin/CTris)
 
 grade: stable # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+confinement: strict # use 'strict' once you have the right plugs and slots
 base: core18
 
 parts:
@@ -17,4 +17,4 @@ parts:
 
 apps:
   ctris:
-    command: ../bin/ctris
+    command: ./ctris

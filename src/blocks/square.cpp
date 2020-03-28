@@ -13,9 +13,9 @@ int Square::getRow() { return row; }
 
 int Square::getCol() { return col; }
 
-int Square::setRow(int row) { this->row = row; }
+void Square::setRow(int row) { this->row = row; }
 
-int Square::setCol(int col) { this->col = col; }
+void Square::setCol(int col) { this->col = col; }
 
 void Square::bumpLeft() { col--; }
 
