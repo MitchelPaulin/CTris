@@ -25,7 +25,6 @@ void GameWindow::initWindow()
             board[i][j] = EMPTY_CELL;
         }
     }
-
     refresh();
 }
 
@@ -35,7 +34,7 @@ void GameWindow::initWindow()
 void GameWindow::render()
 {
     int curRow = 1;
-    for (int i = 21; i >= 0; i--)
+    for (int i = ROWS - 5; i >= 0; i--)
     {
         wmove(getWin(), curRow++, 1); //move cursor to next line
         for (int j = 0; j < COLS; j++)
@@ -88,7 +87,7 @@ bool GameWindow::blockCollides(Block block)
 {
     for (Square *s : block.getSquares())
     {
-        //position full 
+        //position full
         if (s->getRow() < 0 || s->getRow() >= ROWS || s->getCol() < 0 || s->getCol() >= COLS || !isCellEmpty(s->getRow(), s->getCol()))
         {
             return true;
@@ -99,7 +98,7 @@ bool GameWindow::blockCollides(Block block)
 
 /*
     Remove any completed lines from the game 
-    Returns the number of liens removed for scoring purposes 
+    Returns the number of lines removed for scoring purposes 
 */
 int GameWindow::removeCompletedLines()
 {
@@ -125,7 +124,7 @@ int GameWindow::removeCompletedLines()
                 board[r][c] = EMPTY_CELL;
             }
             //Everything above this lines must be shifted one down
-            for (int i = r; i < ROWS; i++)
+            for (int i = r; i < ROWS - 1; i++)
             {
                 for (int j = 0; j < COLS; j++)
                 {

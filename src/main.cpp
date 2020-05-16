@@ -245,7 +245,7 @@ int linesToScore(int lines)
 }
 
 /*
-	Determin if given the current block whether or not we can move right 
+	Determin if, given the current block, whether or not we can move right 
 */
 bool canMoveRight(Block block, GameWindow &win)
 {
@@ -260,7 +260,7 @@ bool canMoveRight(Block block, GameWindow &win)
 }
 
 /*
-	Determine if given the current block whether or not we can move left
+	Determine if, given the current block, whether or not we can move left
 */
 bool canMoveLeft(Block block, GameWindow &win)
 {
@@ -275,7 +275,7 @@ bool canMoveLeft(Block block, GameWindow &win)
 }
 
 /*
-	Determine if given the current block whether or not we can move down
+	Determine if, given the current block, whether or not we can move down
 */
 bool canMoveDown(Block block, GameWindow &win)
 {
