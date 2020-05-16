@@ -1,5 +1,5 @@
 name: ctris
-version: '1.0'
+version: '1.1'
 summary: A Tetris clone written in C++
 description: |
   A minimal Tetris game written to run in a standard 80x24 terminal. (https://github.com/MitchelPaulin/CTris)
@@ -17,4 +17,6 @@ parts:
 
 apps:
   ctris:
+    environment:
+      LC_ALL: C.UTF-8
     command: ./ctris
