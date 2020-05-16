@@ -158,6 +158,7 @@ int main(void)
 					gameWindow.fillScreen();
 					gameWindow.render();
 					gameOver = true;
+					continue;
 				}
 
 				gameWindow.drawBlock(*curPiece);
