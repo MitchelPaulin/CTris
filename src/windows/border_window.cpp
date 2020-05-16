@@ -24,9 +24,9 @@ const char *bannerString[length] = {
     "Right:      D | →",
     "Down:       S | ↓",
     "Rotate:     W | ↑",
-    "Drop:    Space",
-    "Restart:     R",
-    "Exit:      Esc",
+    "Drop:     Space ",
+    "Restart:      R ",
+    "Exit:       Esc ",
     "",
     "",
     "Next:     "};
