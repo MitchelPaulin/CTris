@@ -2,6 +2,7 @@
 #include <vector>
 #include <unistd.h>
 #include <random>
+#include <locale.h>
 #include "windows/border_window.h"
 #include "windows/game_window.h"
 #include "../include/constants.h"
@@ -16,12 +17,13 @@ int linesToScore(int lines);
 
 int main(void)
 {
+	setlocale(LC_CTYPE, ""); //allow unicode characters
 	initscr();
 	cbreak(); //disable buffering
 	start_color(); //enable colors
 	initColors();
 	noecho();
-	curs_set(0); //hide cursor
+	curs_set(FALSE); //hide cursor
 
 	//Initialize random number generator
 	std::random_device dev;

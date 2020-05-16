@@ -1,7 +1,7 @@
 CC = g++
 
 #link the curses directory 
-CFLAGS = -lncurses
+CFLAGS = -lncursesw
 
 W_DIR = src/windows
 COMPILE_WINDOWS = $(W_DIR)/window.cpp $(W_DIR)/game_window.cpp $(W_DIR)/border_window.cpp
