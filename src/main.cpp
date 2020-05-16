@@ -17,7 +17,7 @@ int linesToScore(int lines);
 int main(void)
 {
 	initscr();
-	cbreak();	  //disable buffering
+	cbreak(); //disable buffering
 	start_color(); //enable colors
 	initColors();
 	noecho();
@@ -31,6 +31,7 @@ int main(void)
 	//Construct windows
 	BorderWindow UIWindow = BorderWindow(HEIGHT, WIDTH, GAME_WIDTH, 0);
 	GameWindow gameWindow = GameWindow(HEIGHT, GAME_WIDTH, 0, 0);
+	keypad(UIWindow.getWin(), TRUE); //enable keypad inputs from user
 	gameWindow.render();
 
 	//Prevent wgetch from being a blocking call
@@ -43,7 +44,7 @@ int main(void)
 
 	int score = 0;
 	int downTimer = 0; //Once this hits a certain number of loops we move the block down
-	char userInput;
+	int userInput;
 	bool gameOver = false;
 
 	//Game loop
@@ -69,9 +70,9 @@ int main(void)
 			gameOver = false;
 			continue;
 		}
-		else if (userInput == 'e' || userInput == 'E')
+		else if (userInput == EXIT_KEY)
 		{
-			break; //Exit
+			break; // exit
 		}
 
 		if (gameOver)
@@ -83,21 +84,21 @@ int main(void)
 		gameWindow.eraseBlock(*curPiece);
 
 		//Check for block movement inputs 
-		if (userInput == 'd' || userInput == 'D')
+		if (userInput == 'd' || userInput == 'D' || userInput == KEY_RIGHT)
 		{
 			if (canMoveRight(*curPiece, gameWindow))
 			{
 				curPiece->moveRight();
 			}
 		}
-		else if (userInput == 'a' || userInput == 'A')
+		else if (userInput == 'a' || userInput == 'A' || userInput == KEY_LEFT)
 		{
 			if (canMoveLeft(*curPiece, gameWindow))
 			{
 				curPiece->moveLeft();
 			}
 		}
-		else if (userInput == 'w' || userInput == 'W')
+		else if (userInput == 'w' || userInput == 'W' || userInput == KEY_UP)
 		{
 			Block *rotatedPiece = curPiece->rotate();
 			//If we can rotate the piece
@@ -112,7 +113,7 @@ int main(void)
 				delete (rotatedPiece);
 			}
 		}
-		else if (userInput == 's' || userInput == 'S')
+		else if (userInput == 's' || userInput == 'S' || userInput == KEY_DOWN)
 		{
 			if (canMoveDown(*curPiece, gameWindow))
 			{

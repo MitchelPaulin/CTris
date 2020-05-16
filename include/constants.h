@@ -9,3 +9,4 @@
 #define CLOCK_SPEED 10000
 #define BLOCK_FALL_SPEED 75
 #define BLOCK_TYPES 7
+#define EXIT_KEY 27
