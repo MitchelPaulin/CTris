@@ -1,4 +1,6 @@
-# CTris
+# CTris 
+[![ctris](https://snapcraft.io//ctris/badge.svg)](https://snapcraft.io/ctris)
+
 [CTris](https://snapcraft.io/ctris) is a command line Tetris program written in C++. Made to work in the standard 80x24 terminal of most linux systems. Also works pretty well on the Windows Linux subsystem. Implemented custom rendering, collision detection and rotation algorithms.
 
 You can install ctris directly from the snap store!
