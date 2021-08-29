@@ -1,4 +1,3 @@
-//The cyan long piece block
 #ifndef BLUE_PIECE_H
 #define BLUE_PIECE_H
 
@@ -11,7 +10,7 @@ class LongPiece : public Block
 public:
     static const BLOCK_COLOR color = COLOR_CYAN;
     LongPiece();
-    LongPiece(std::vector<Square*>, Square* center);
+    LongPiece(std::vector<Square *>, Square *center);
     Block *rotate() override;
 
 private:
@@ -22,7 +21,7 @@ private:
         DOWN,
         RIGHT
     };
-    Direction dir = Direction::RIGHT; 
+    Direction dir = Direction::RIGHT;
 };
 
 #endif

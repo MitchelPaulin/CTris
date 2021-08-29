@@ -6,10 +6,6 @@ GameWindow::GameWindow(int width, int height, int startY, int startX) : Window(w
     GameWindow::initWindow();
 }
 
-/*
-    Override
-    Draw the initial state of the window
-*/
 void GameWindow::initWindow()
 {
     wborder(getWin(), 0, 0, 0, 0, 0, 0, 0, 0);
@@ -58,9 +54,6 @@ void GameWindow::render()
     refresh();
 }
 
-/*
-    Remove this block from the array
-*/
 void GameWindow::eraseBlock(Block block)
 {
     for (Square *s : block.getSquares())
@@ -69,9 +62,6 @@ void GameWindow::eraseBlock(Block block)
     }
 }
 
-/*
-    Put the block in the array 
-*/
 void GameWindow::drawBlock(Block block)
 {
     for (Square *s : block.getSquares())
@@ -80,14 +70,10 @@ void GameWindow::drawBlock(Block block)
     }
 }
 
-/*
-    Determine if given the current block whether or not it is in a valid position
-*/
 bool GameWindow::blockCollides(Block block)
 {
     for (Square *s : block.getSquares())
     {
-        //position full
         if (s->getRow() < 0 || s->getRow() >= ROWS || s->getCol() < 0 || s->getCol() >= COLS || !isCellEmpty(s->getRow(), s->getCol()))
         {
             return true;
@@ -140,9 +126,6 @@ int GameWindow::removeCompletedLines()
     return linesRemoved;
 }
 
-/*
-    Fill board with colors  
-*/
 void GameWindow::fillScreen()
 {
     for (int i = 0; i < ROWS; i++)

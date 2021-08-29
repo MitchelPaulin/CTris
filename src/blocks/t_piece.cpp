@@ -2,7 +2,7 @@
 
 TPiece::TPiece()
 {
-    centerOfRotation = new Square(TPiece::color, BOARD_HEIGHT - 3, BOARD_WIDTH - 5); 
+    centerOfRotation = new Square(TPiece::color, BOARD_HEIGHT - 3, BOARD_WIDTH - 5);
 
     blocks.push_back(centerOfRotation);
     blocks.push_back(new Square(TPiece::color, BOARD_HEIGHT - 3, BOARD_WIDTH - 6));

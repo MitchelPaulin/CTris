@@ -38,19 +38,19 @@ Block *LongPiece::rotate()
     case Direction::RIGHT:
         ret->moveLeft();
         ret->dir = Direction::DOWN;
-        return ret; 
+        return ret;
     case Direction::DOWN:
         ret->moveUp();
         ret->dir = Direction::LEFT;
-        return ret; 
+        return ret;
     case Direction::LEFT:
         ret->moveRight();
         ret->dir = Direction::UP;
-        return ret; 
+        return ret;
     case Direction::UP:
         ret->moveDown();
         ret->dir = Direction::RIGHT;
-        return ret; 
+        return ret;
     default:
         return ret;
     }

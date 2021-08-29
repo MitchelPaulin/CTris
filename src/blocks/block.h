@@ -1,4 +1,4 @@
-//the tetris block super class
+// The tetris block super class
 #ifndef BLOCK_H
 #define BLOCK_H
 
@@ -11,12 +11,12 @@ class Block
 
 public:
     Block();
-    Block(std::vector<Square *>, Square*);
+    Block(std::vector<Square *>, Square *);
     ~Block();
     void moveLeft();
     void moveRight();
     void moveDown();
-    void moveUp(); 
+    void moveUp();
     virtual Block *rotate();
     const std::vector<Square *> getSquares();
 

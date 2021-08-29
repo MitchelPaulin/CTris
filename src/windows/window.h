@@ -1,5 +1,3 @@
-//wrapper class for the main windows of the application
-//should be extended for particular functionality
 #ifndef WINDOW_H
 #define WINDOW_H
 
@@ -19,7 +17,7 @@ public:
     int getStartY() { return startY; };
     WINDOW *getWin() { return win; };
     void refresh() { wrefresh(win); };
-    virtual void initWindow() {}; //override
+    virtual void initWindow(){};
 };
 
 #endif

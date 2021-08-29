@@ -1,4 +1,3 @@
-//The green left snake piece
 #ifndef SNAKE_LEFT_PIECE_H
 #define SNAKE_LEFT_PIECE_H
 

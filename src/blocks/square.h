@@ -1,4 +1,3 @@
-//an abstraction of one tetris square
 #ifndef SQUARE_H
 #define SQUARE_H
 

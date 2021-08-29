@@ -19,7 +19,7 @@ int main(void)
 {
 	setlocale(LC_CTYPE, ""); //allow unicode characters
 	initscr();
-	cbreak(); //disable buffering
+	cbreak();	   //disable buffering
 	start_color(); //enable colors
 	initColors();
 	noecho();
@@ -53,11 +53,9 @@ int main(void)
 	for (;;)
 	{
 		usleep(CLOCK_SPEED);
-		
-		//Process user input
+
 		userInput = wgetch(UIWindow.getWin());
 
-		//Check for control inputs 
 		if (userInput == 'r' || userInput == 'R')
 		{
 			//Reset game
@@ -82,10 +80,8 @@ int main(void)
 			continue;
 		}
 
-		//Erase block so we can redraw it in new location
 		gameWindow.eraseBlock(*curPiece);
 
-		//Check for block movement inputs 
 		if (userInput == 'd' || userInput == 'D' || userInput == KEY_RIGHT)
 		{
 			if (canMoveRight(*curPiece, gameWindow))
@@ -103,14 +99,13 @@ int main(void)
 		else if (userInput == 'w' || userInput == 'W' || userInput == KEY_UP)
 		{
 			Block *rotatedPiece = curPiece->rotate();
-			//If we can rotate the piece
 			if (!gameWindow.blockCollides(*rotatedPiece))
 			{
 				gameWindow.eraseBlock(*curPiece);
 				delete (curPiece);
 				curPiece = rotatedPiece;
 			}
-			else //Could not rotate piece
+			else
 			{
 				delete (rotatedPiece);
 			}
@@ -123,7 +118,7 @@ int main(void)
 				downTimer = 0; //Reset down timer
 			}
 		}
-		else if (userInput == ' ') //spacebar pressed
+		else if (userInput == ' ')
 		{
 			while (canMoveDown(*curPiece, gameWindow))
 			{
@@ -163,7 +158,6 @@ int main(void)
 
 				gameWindow.drawBlock(*curPiece);
 
-				//check if we need to remove any lines first
 				int lines = gameWindow.removeCompletedLines();
 
 				//update score
@@ -186,7 +180,6 @@ int main(void)
 			downTimer++;
 		}
 
-		//re render screen with new block location
 		gameWindow.drawBlock(*curPiece);
 		gameWindow.render();
 	}
@@ -198,9 +191,6 @@ int main(void)
 	return 0;
 }
 
-/*
-	Returns a new tetris block 
-*/
 Block *createNewBlock(int num)
 {
 	switch (num)
@@ -245,9 +235,6 @@ int linesToScore(int lines)
 	}
 }
 
-/*
-	Determin if, given the current block, whether or not we can move right 
-*/
 bool canMoveRight(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())
@@ -260,9 +247,6 @@ bool canMoveRight(Block block, GameWindow &win)
 	return true;
 }
 
-/*
-	Determine if, given the current block, whether or not we can move left
-*/
 bool canMoveLeft(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())
@@ -275,9 +259,6 @@ bool canMoveLeft(Block block, GameWindow &win)
 	return true;
 }
 
-/*
-	Determine if, given the current block, whether or not we can move down
-*/
 bool canMoveDown(Block block, GameWindow &win)
 {
 	for (Square *s : block.getSquares())

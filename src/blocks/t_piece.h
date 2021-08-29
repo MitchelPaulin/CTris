@@ -1,4 +1,3 @@
-//The purple T piece block
 #ifndef T_PIECE_H
 #define T_PIECE_H
 

@@ -16,45 +16,30 @@ Block::~Block()
     }
 }
 
-/*
-    Attempt to move this piece down 
-*/
 void Block::moveDown()
 {
-    //move every piece one down
     for (Square *s : blocks)
     {
         s->bumpDown();
     }
 }
 
-/*
-    Attempt to move this piece right 
-*/
 void Block::moveRight()
 {
-    //move every piece one to the right
     for (Square *s : blocks)
     {
         s->bumpRight();
     }
 }
 
-/*
-    Attempt to move this piece left 
-*/
 void Block::moveLeft()
 {
-    //move every piece one to the left
     for (Square *s : blocks)
     {
         s->bumpLeft();
     }
 }
 
-/*
-    Attempt to move this piece up 
-*/
 void Block::moveUp()
 {
     for (Square *s : blocks)
@@ -63,16 +48,13 @@ void Block::moveUp()
     }
 }
 
-/*
-    Return the squares that make up this piece 
-*/
 const std::vector<Square *> Block::getSquares()
 {
     return blocks;
 }
 
 /*
-    Rotate a block around a give center
+    Rotate a block around its center
 */
 Block *Block::rotate()
 {

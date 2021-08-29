@@ -37,7 +37,7 @@ BorderWindow::BorderWindow(int width, int height, int startY, int startX) : Wind
 }
 
 /*
-    Change the score displayed on the banner, when this is called refresh will also be called 
+    Change the score displayed on the banner
 */
 void BorderWindow::updateScore(int s)
 {
@@ -51,12 +51,9 @@ void BorderWindow::updateScore(int s)
     refresh();
 }
 
-/*
-    Draw the initial state of the window
-*/
 void BorderWindow::initWindow()
 {
-    wclear(getWin()); 
+    wclear(getWin());
     //Draw every line and also center it within the frame
     for (int i = 0; i < length; i++)
     {
@@ -72,11 +69,9 @@ void BorderWindow::initWindow()
 
 /*
     Draws the given block in the "next" spot on the UI
-    Will refresh UI
 */
 void BorderWindow::addNextBlock(Block block)
 {
-    //First, remove the currently drawn block
     removeCurrentBlock();
 
     //Find the leftmost and topmost block and use it as a drawing anchor
@@ -95,15 +90,15 @@ void BorderWindow::addNextBlock(Block block)
         }
     }
 
-    //draw the shape using the anchor as a reference point
+    //Draw the shape using the anchor as a reference point
     for (Square *s : block.getSquares())
     {
-        //save the locatoin of the currently draw piece so we can erase it without having to re render the whole UI
+        //Save the location of the currently drawn piece so we can erase it without having to re render the whole UI
         int x = (s->getCol() - xAnchor->getCol()) * 2 + nextX; //multiply by 2 because each box takes up two spaces
         int y = nextY - (s->getRow() - yAnchor->getRow());
         curPieceCords.push_back(std::pair<int, int>(y, x));
 
-        //draw block
+        //Draw block
         wmove(getWin(), y, x);
         wattron(getWin(), COLOR_PAIR(s->getColor()));
         wprintw(getWin(), "  ");
@@ -114,7 +109,7 @@ void BorderWindow::addNextBlock(Block block)
 }
 
 /*
-    Remove the current drawn block from the UI
+    Remove the currently drawn block from the UI
     Should be called before you draw another "next" block 
 */
 void BorderWindow::removeCurrentBlock()

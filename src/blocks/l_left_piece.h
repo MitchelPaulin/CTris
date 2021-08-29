@@ -1,4 +1,3 @@
-//The white left L piece
 #ifndef L_LEFT_PIECE_H
 #define L_LEFT_PIECE_H
 

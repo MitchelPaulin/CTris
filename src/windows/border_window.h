@@ -1,4 +1,3 @@
-//the border window wrapper
 #ifndef BORDER_WINDOW_H
 #define BORDER_WINDOW_H
 
@@ -10,10 +9,11 @@ class BorderWindow : public Window
 public:
     void updateScore(int score);
     void initWindow();
-    void addNextBlock(Block); 
-    BorderWindow(int width, int height, int startY, int startX); 
+    void addNextBlock(Block);
+    BorderWindow(int width, int height, int startY, int startX);
+
 private:
-    void removeCurrentBlock(); 
+    void removeCurrentBlock();
 };
 
 #endif
